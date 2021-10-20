@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "tpclinica-282c4": {
+      "hosting": {
+        "ClinicaTP": [
+          "tpclinica-282c4"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "tpclinica-282c4"
+  }
+}

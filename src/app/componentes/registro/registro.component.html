@@ -2,78 +2,146 @@
   <div id="formContent">
     <!-- Tabs Titles -->
     <h2 class="active"> Registro</h2>
+    <br>
+    <label>¿Que tipo de usuario esta por registrar?</label>
 
-    <select name="transporte">
-
-      <option selected>Elegir opcion</option>
-
-      <option>Paciente</option>
-
-      <option>Especialista</option>
-
+    <select [(ngModel)]="opcionSeleccionado" (change)="capturar()">
+      <option selected value="0">Elegir opcion</option>
+      <option *ngFor="let dato of tipoUsuario" value="{{dato}}">
+        {{dato}}
+      </option>
     </select>
-    <div *ngIf='paciente'>
-      <form>
-        <input type="text" id="login" class="fadeIn second" name="login" placeholder="Nombre">
-        <input type="text" id="login" class="fadeIn second" name="login" placeholder="Apellido">
-        <input type="text" id="login" class="fadeIn second" name="login" placeholder="Edad">
-        <input type="text" id="login" class="fadeIn second" name="login" placeholder="DNI">
-        <input type="text" id="login" class="fadeIn second" name="login" placeholder="Obra social">
-        <input type="text" id="login" class="fadeIn second" name="login" placeholder="Email">
-        <input type="text" id="password" class="fadeIn third" name="login" placeholder="Clave">
-        <input type="text" id="login" class="fadeIn second" name="login" placeholder="Imagen">
-        <input type="text" id="login" class="fadeIn second" name="login" placeholder="Imagen">
-        <input type="submit" class="fadeIn fourth" value="Registro">
-      </form>
-    </div>
+
+    <br>
+    <div *ngIf='paciente!= null'>
+      <div *ngIf='paciente && paciente!= null'>
+        <form [formGroup]='formulario' (ngSubmit)='aceptarPaciente()'>
+
+          <div class="form-group">
+            <input type="text" formControlName='nombre' class="fadeIn second" placeholder="Nombre">
+            <small class="form-text text-muted"
+              *ngIf="formulario.get('nombre')?.hasError('required') && formulario.get('nombre')?.touched">El Nombre es
+              requerido.</small>
+          </div>
 
 
-    <div *ngIf='!paciente'>
-      <form>
-        <input type="text" id="login" class="fadeIn second" name="login" placeholder="Nombre">
-        <input type="text" id="login" class="fadeIn second" name="login" placeholder="Apellido">
-        <input type="text" id="login" class="fadeIn second" name="login" placeholder="Edad">
-        <input type="text" id="login" class="fadeIn second" name="login" placeholder="DNI">
-        <label>Elegir una opcion: </label>
-        <select name="especialidad">
-          <option selected>Cardiologia</option>
-          <option>Nutricion</option>
-        </select>
-        <br>
-        
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-      >Crear especialidad</button> 
-      <br>
-        <input type="text" id="login" class="fadeIn second" name="login" placeholder="Email">
-        <input type="text" id="password" class="fadeIn third" name="login" placeholder="Clave">
-        <input type="text" id="login" class="fadeIn second" name="login" placeholder="Imagen">
-        <input type="submit" class="fadeIn fourth" value="Registro">
-      </form>
+          <div class="form-group">
+            <input type="text" formControlName='apellido' class="fadeIn second" placeholder="Apellido">
+            <small class="form-text text-muted"
+              *ngIf="formulario.get('apellido')?.hasError('apellido') && formulario.get('apellido')?.touched">El
+              apellido es requerido.</small>
+          </div>
+
+          <div class="form-group">
+            <input type="number" formControlName='edad' class="fadeIn second" placeholder="Edad">
+            <small class="form-text text-muted"
+              *ngIf="formulario.get('edad')?.hasError('required') && formulario.get('edad')?.touched">La edad es
+              requerida.</small>
+            <small id="edadHelp2" class="form-text text-muted"
+              *ngIf="formulario.get('edad')?.hasError('min') && formulario.get('edad')?.touched">La edad minima es
+              18.</small>
+            <small id="edadHelp2" class="form-text text-muted"
+              *ngIf="formulario.get('edad')?.hasError('max') && formulario.get('edad')?.touched">La edad maxima es
+              99.</small>
+          </div>
 
 
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Nueva especialidad</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="mb-3">
-                  <label for="recipient-name" class="col-form-label">Especialidad:</label>
-                  <input type="text" class="form-control" id="recipient-name">
-                </div> 
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-primary">Guardar</button>
+          <div class="form-group">
+            <input type="number" formControlName='dni' class="fadeIn second" placeholder="DNI">
+            <small class="form-text text-muted"
+              *ngIf="formulario.get('dni')?.hasError('dni') && formulario.get('dni')?.touched">El
+              dni es requerido.</small>
+          </div>
+
+          <div class="form-group">
+            <input type="text" formControlName='obraSocial' class="fadeIn second" placeholder="Obra social">
+            <small class="form-text text-muted"
+              *ngIf="formulario.get('obraSocial')?.hasError('obraSocial') && formulario.get('obraSocial')?.touched">La
+              obraSocial es requerida.</small>
+          </div>
+
+
+          <div class="form-group">
+
+            <input type="email" formControlName='email' class="fadeIn second" placeholder="Email">
+            <small class="form-text text-muted"
+              *ngIf="formulario.get('email')?.hasError('email') && formulario.get('email')?.touched">El email es
+              requerido.</small>
+          </div>
+
+          <div class="form-group">
+            <input type="password" formControlName='clave' class="fadeIn third" placeholder="Clave">
+            <small class="form-text text-muted"
+              *ngIf="formulario.get('clave')?.hasError('clave') && formulario.get('clave')?.touched">La clave es
+              requerida.</small>
+          </div>
+
+
+          <div class="form-group">
+            <input type="text" formControlName='imagen1' class="fadeIn second" placeholder="Imagen">
+            <small class="form-text text-muted"
+              *ngIf="formulario.get('imagen1')?.hasError('imagen1') && formulario.get('imagen1')?.touched">La imagen1 es
+              requerida.</small>
+          </div>
+          <div class="form-group">
+            <input type="text" formControlName='imagen2' class="fadeIn second" placeholder="Imagen">
+            <small class="form-text text-muted"
+              *ngIf="formulario.get('imagen2')?.hasError('imagen2') && formulario.get('imagen2')?.touched">La imagen2 es
+              requerida.</small>
+          </div>
+
+          <button type="submit" class="btn btn-success" [disabled]='formulario.invalid'>ENVIAR</button>
+        </form>
+      </div>
+
+
+      <div *ngIf='!paciente && paciente!= null'>
+        <form>
+          <input type="text" id="login" class="fadeIn second" name="login" placeholder="Nombre">
+          <input type="text" id="login" class="fadeIn second" name="login" placeholder="Apellido">
+          <input type="text" id="login" class="fadeIn second" name="login" placeholder="Edad">
+          <input type="text" id="login" class="fadeIn second" name="login" placeholder="DNI">
+          <label>Elegir una opcion: </label>
+          <select name="especialidad">
+            <option selected>Cardiologia</option>
+            <option>Nutricion</option>
+          </select>
+          <br>
+
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Crear
+            especialidad</button>
+          <br>
+          <input type="text" id="login" class="fadeIn second" name="login" placeholder="Email">
+          <input type="text" id="password" class="fadeIn third" name="login" placeholder="Clave">
+          <input type="text" id="login" class="fadeIn second" name="login" placeholder="Imagen">
+          <input type="submit" class="fadeIn fourth" value="Registro">
+        </form>
+
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nueva especialidad</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="mb-3">
+                    <label for="recipient-name" class="col-form-label">Especialidad:</label>
+                    <input type="text" class="form-control" id="recipient-name">
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">Guardar</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
+    </div>
   </div>
 </div>

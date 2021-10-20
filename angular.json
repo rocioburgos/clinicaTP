@@ -98,6 +98,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "ClinicaTP:build:production",
+            "firebaseProject": "tpclinica-282c4",
+            "firebaseHostingSite": "tpclinica-282c4"
+          }
         }
       }
     }
