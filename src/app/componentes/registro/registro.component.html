@@ -92,17 +92,51 @@
 
           <button type="submit" class="btn btn-success" [disabled]='formulario.invalid'>ENVIAR</button>
         </form>
+        {{mensaje}}
       </div>
 
 
       <div *ngIf='!paciente && paciente!= null'>
-        <form>
-          <input type="text" id="login" class="fadeIn second" name="login" placeholder="Nombre">
-          <input type="text" id="login" class="fadeIn second" name="login" placeholder="Apellido">
-          <input type="text" id="login" class="fadeIn second" name="login" placeholder="Edad">
-          <input type="text" id="login" class="fadeIn second" name="login" placeholder="DNI">
+        <form [formGroup]='formularioEspecialista' (ngSubmit)='aceptarEspecialista()'>
+          <div class="form-group">
+            <input type="text" formControlName='nombre_' class="fadeIn second" placeholder="Nombre">
+            <small class="form-text text-muted"
+              *ngIf="formularioEspecialista.get('nombre_')?.hasError('required') && formularioEspecialista.get('nombre_')?.touched">El Nombre es
+              requerido.</small>
+          </div>
+
+
+          <div class="form-group">
+            <input type="text" formControlName='apellido' class="fadeIn second" placeholder="Apellido">
+            <small class="form-text text-muted"
+              *ngIf="formularioEspecialista.get('apellido')?.hasError('apellido') && formularioEspecialista.get('apellido')?.touched">El
+              apellido es requerido.</small>
+          </div>
+
+          <div class="form-group">
+            <input type="number" formControlName='edad' class="fadeIn second" placeholder="Edad">
+            <small class="form-text text-muted"
+              *ngIf="formularioEspecialista.get('edad')?.hasError('required') && formularioEspecialista.get('edad')?.touched">La edad es
+              requerida.</small>
+            <small id="edadHelp2" class="form-text text-muted"
+              *ngIf="formularioEspecialista.get('edad')?.hasError('min') && formularioEspecialista.get('edad')?.touched">La edad minima es
+              18.</small>
+            <small id="edadHelp2" class="form-text text-muted"
+              *ngIf="formularioEspecialista.get('edad')?.hasError('max') && formularioEspecialista.get('edad')?.touched">La edad maxima es
+              99.</small>
+          </div>
+
+
+          <div class="form-group">
+            <input type="number" formControlName='dni' class="fadeIn second" placeholder="DNI">
+            <small class="form-text text-muted"
+              *ngIf="formularioEspecialista.get('dni')?.hasError('dni') && formularioEspecialista.get('dni')?.touched">El
+              dni es requerido.</small>
+          </div>
+
+
           <label>Elegir una opcion: </label>
-          <select name="especialidad">
+          <select name="especialidad" formControlName='especialidad'>
             <option selected>Cardiologia</option>
             <option>Nutricion</option>
           </select>
@@ -111,11 +145,31 @@
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Crear
             especialidad</button>
           <br>
-          <input type="text" id="login" class="fadeIn second" name="login" placeholder="Email">
-          <input type="text" id="password" class="fadeIn third" name="login" placeholder="Clave">
-          <input type="text" id="login" class="fadeIn second" name="login" placeholder="Imagen">
-          <input type="submit" class="fadeIn fourth" value="Registro">
+          <div class="form-group">
+
+            <input type="email" formControlName='email' class="fadeIn second" placeholder="Email">
+            <small class="form-text text-muted"
+              *ngIf="formularioEspecialista.get('email')?.hasError('email') && formularioEspecialista.get('email')?.touched">El email es
+              requerido.</small>
+          </div>
+
+          <div class="form-group">
+            <input type="password" formControlName='clave' class="fadeIn third" placeholder="Clave">
+            <small class="form-text text-muted"
+              *ngIf="formularioEspecialista.get('clave')?.hasError('clave') && formularioEspecialista.get('clave')?.touched">La clave es
+              requerida.</small>
+          </div>
+
+
+          <div class="form-group">
+            <input type="text" formControlName='imagen1' class="fadeIn second" placeholder="Imagen">
+            <small class="form-text text-muted"
+              *ngIf="formularioEspecialista.get('imagen1')?.hasError('imagen1') && formularioEspecialista.get('imagen1')?.touched">La imagen1 es
+              requerida.</small> 
+          </div>
+          <button type="submit" class="btn btn-success" [disabled]='formularioEspecialista.invalid'>ENVIAR</button>
         </form>
+        {{mensaje}}
 
 
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -126,16 +180,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form>
+                <form [formGroup]='formulario_Especialidad' (ngSubmit)='aceptarEspecialidad()'>
                   <div class="mb-3">
                     <label for="recipient-name" class="col-form-label">Especialidad:</label>
-                    <input type="text" class="form-control" id="recipient-name">
+                    <input type="text" class="form-control" id="recipient-name" formControlName='nombre'>
                   </div>
                 </form>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Guardar</button>
+                <button type="submit" class="btn btn-primary"  [disabled]='formulario_Especialidad.invalid'>Guardar</button>
               </div>
             </div>
           </div>
