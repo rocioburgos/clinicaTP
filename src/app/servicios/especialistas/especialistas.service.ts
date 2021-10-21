@@ -22,4 +22,9 @@ export class EspecialistasService {
     this.especialistasCollection =  this.afs.collection('especialistas');  
     return this.especialistasCollection.add(Object.assign({},datoUser)); 
   }
+
+
+  traerEspecialistas(){
+    return this.especialistasCollection.valueChanges({idField: "doc_id"});
+  }
 }

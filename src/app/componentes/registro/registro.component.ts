@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/servicios/auth/auth.service';
 import { EspecialidadesService } from 'src/app/servicios/especialidades/especialidades.service';
 import { EspecialistasService } from 'src/app/servicios/especialistas/especialistas.service';
 import { PacientesService } from 'src/app/servicios/pacientes/pacientes.service';
@@ -11,7 +12,7 @@ import { PacientesService } from 'src/app/servicios/pacientes/pacientes.service'
 })
 export class RegistroComponent implements OnInit {
 
-  paciente:any;
+  paciente: any;
   tipoUsuario = ['Especialista', 'Paciente'];
 
   // Seleccionamos o iniciamos el valor '0' del <select>
@@ -19,43 +20,45 @@ export class RegistroComponent implements OnInit {
   verSeleccion: string = '';
 
 
-  formulario:FormGroup; 
-  formularioEspecialista:FormGroup;
-  formulario_Especialidad:FormGroup;
-  completarForm= true;
-  mensaje:string='';
-  constructor(private fb:FormBuilder, private fbesp:FormBuilder, 
-              private router:Router, 
-              private pacienteSrv:PacientesService, 
-              private especialistasSrv:EspecialistasService, 
-              private especialidadesSrv:EspecialidadesService
-            ) {
-    this.paciente= null;
+  formulario: FormGroup;
+  formularioEspecialista: FormGroup;
+  formulario_Especialidad: FormGroup;
+  completarForm = true;
+  mensaje: string = '';
+  constructor(private fb: FormBuilder, 
+    private fbesp: FormBuilder,
+    private router: Router,
+    private pacienteSrv: PacientesService,
+    private especialistasSrv: EspecialistasService,
+    private especialidadesSrv: EspecialidadesService,
+    private authSrv: AuthService
+  ) {
+    this.paciente = null;
 
-    this.formulario= fb.group({ 
-      nombre: ['', [Validators.required] ],
-      apellido: ['', [Validators.required]], 
-      edad: ['',[Validators.required, Validators.min(18), Validators.max(99)]],
-      dni: ['', [Validators.required,  Validators.pattern('^[0-9]*$'),  Validators.maxLength(10), Validators.minLength(10) ]],
+    this.formulario = fb.group({
+      nombre: ['', [Validators.required]],
+      apellido: ['', [Validators.required]],
+      edad: ['', [Validators.required, Validators.min(18), Validators.max(99)]],
+      dni: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.maxLength(10), Validators.minLength(10)]],
       obraSocial: ['', Validators.required],
-      email: ['', [Validators.required , Validators.email]], 
+      email: ['', [Validators.required, Validators.email]],
       clave: ['', Validators.required],
       imagen1: ['', Validators.required],
       imagen2: ['', Validators.required]
     });
 
-    this.formularioEspecialista= fbesp.group({
-      nombre_: ['', [Validators.required] ],
-      apellido: ['', [Validators.required]], 
-      edad: ['',[Validators.required, Validators.min(18), Validators.max(99)]],
-      dni: ['', [Validators.required,  Validators.pattern('^[0-9]*$'),  Validators.maxLength(10), Validators.minLength(10) ]],
+    this.formularioEspecialista = fbesp.group({
+      nombre_: ['', [Validators.required]],
+      apellido: ['', [Validators.required]],
+      edad: ['', [Validators.required, Validators.min(18), Validators.max(99)]],
+      dni: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.maxLength(10), Validators.minLength(10)]],
       especialidad: ['', Validators.required],
-      email: ['', [Validators.required , Validators.email]], 
+      email: ['', [Validators.required, Validators.email]],
       clave: ['', Validators.required],
-      imagen1: ['', Validators.required], 
+      imagen1: ['', Validators.required],
     });
     this.formulario_Especialidad = fb.group({
-      nombre: ['', [Validators.required] ]
+      nombre: ['', [Validators.required]]
     })
 
 
@@ -68,74 +71,92 @@ export class RegistroComponent implements OnInit {
   capturar() {
     // Pasamos el valor seleccionado a la variable verSeleccion
     this.verSeleccion = this.opcionSeleccionado;
-    if(this.verSeleccion =='Paciente'){
+    if (this.verSeleccion == 'Paciente') {
       this.paciente = true;
-    }else{
-      this.paciente= false;
+    } else {
+      this.paciente = false;
     }
   }
 
-  
-  aceptarPaciente(){
-    const form = this.formulario.value; 
-       this.completarForm= false;
-     let datos = {
-       nombre: form.nombre,
-       apellido: form.apellido ,
-       edad: form.edad ,
-       dni: form.dni , 
-       email: form.email,
-       obraSocial: form.obraSocial,
-       clave: form.clave,
-       imagen1: form.imagen1,
-       imagen2: form.imagen2
-       }
-    
+
+ async aceptarPaciente() {
+    const form = this.formulario.value;
+    this.completarForm = false;
+    let datos = {
+      nombre: form.nombre,
+      apellido: form.apellido,
+      edad: form.edad,
+      dni: form.dni,
+      email: form.email,
+      obraSocial: form.obraSocial,
+      clave: form.clave,
+      imagen1: form.imagen1,
+      imagen2: form.imagen2,
+      perfil:'paciente' 
+    }
+
+    try {
+      const user = await this.authSrv.registerUser(datos.email, datos.clave); 
+      if (user) {
+        this.pacienteSrv.registrarPaciente(datos).then((res) => {
+          console.log(datos);
+          this.mensaje = 'Usuario creado';
+        });
+
+      }
+    } catch (error) {
+      console.log(error);
+      this.mensaje=''+error;
+    }
 
 
-     this.pacienteSrv.registrarPaciente(datos).then((res)=>{ 
-      console.log(datos);
-      this.mensaje= 'Usuario creado'; 
-    }); 
-     }
+  }
 
 
-     aceptarEspecialista(){
-      const formEspe = this.formularioEspecialista.value; 
-      this.completarForm= false;
+ async aceptarEspecialista() {
+    const formEspe = this.formularioEspecialista.value;
+    this.completarForm = false;
     let datos = {
       nombre: formEspe.nombre_,
-      apellido: formEspe.apellido ,
-      edad: formEspe.edad ,
-      dni: formEspe.dni , 
+      apellido: formEspe.apellido,
+      edad: formEspe.edad,
+      dni: formEspe.dni,
       email: formEspe.email,
       especialidad: formEspe.especialidad,
       clave: formEspe.clave,
-      imagen1: formEspe.imagen1
+      imagen1: formEspe.imagen1,
+      perfil:'especialista',
+      estado: 'pendiente'
+    };
+
+    try {
+      const user = await this.authSrv.registerUser(datos.email, datos.clave); 
+      if (user) {
+        this.especialistasSrv.registrarEspecialista(datos).then((res) => {
+          console.log(datos);
+          this.mensaje = 'Usuario creado';
+        }); 
+      } 
+    } catch (error) {
+      console.log(error);
+      this.mensaje=''+error;
     }
-   
+  }
 
 
-    this.especialistasSrv.registrarEspecialista(datos).then((res)=>{ 
-     console.log(datos);
-     this.mensaje= 'Usuario creado'; 
-   });
-     }
-
-
-     aceptarEspecialidad(){
-      const form = this.formulario_Especialidad.value; 
-      this.completarForm= false;
+  aceptarEspecialidad() {
+    const form = this.formulario_Especialidad.value;
+    this.completarForm = false;
     let datos = {
       nombre: form.nombre
-      }
-   
+    }
 
 
-    this.especialidadesSrv.registrarEspecialidad(datos).then((res)=>{ 
-     console.log(datos);
-     this.mensaje= 'Especialidad creada'; 
-   });
-     }
+
+    this.especialidadesSrv.registrarEspecialidad(datos).then((res) => {
+      console.log(datos);
+      this.mensaje = 'Especialidad creada';
+    });
+  }
 
 }

@@ -15,7 +15,10 @@ import { AngularFireModule } from "@angular/fire/compat";
 import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from 'src/environments/environment';
+import { HomeAdminComponent } from './componentes/home-admin/home-admin.component';
  
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +26,8 @@ import { environment } from 'src/environments/environment';
     LoginComponent,
     RegistroComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    HomeAdminComponent
   ],
   imports: [
     CommonModule ,
@@ -34,6 +38,7 @@ import { environment } from 'src/environments/environment';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule ,
+    NgbModule //PARA LOS USAR LOS MODALES DE BOOTSTRAP
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -9,11 +9,22 @@
       </div>
       <div>
         <!-- Login Form -->
-        <form>
-          <input type="text" id="login" class="fadeIn second" name="login" placeholder="Email">
-          <input type="text" id="password" class="fadeIn third" name="login" placeholder="Clave">
-          <input type="submit" class="fadeIn fourth" value="Ingresar">
+        <form  [formGroup]='formulario' (ngSubmit)='login()' >
+         <div class="form-group">
+          <input type="email" class="fadeIn second" formControlName='email' placeholder="Email">
+          <small class="form-text text-muted"
+          *ngIf="formulario.get('email')?.hasError('email') && formulario.get('email')?.touched">El email es
+          requerido.</small>
+        </div>
+        <div class="form-group"> 
+          <input type="password"  class="fadeIn third" formControlName='clave' placeholder="Clave">
+          <small class="form-text text-muted"
+          *ngIf="formulario.get('clave')?.hasError('clave') && formulario.get('clave')?.touched">La clave es
+          requerido.</small>
+        </div>
+          <input type="submit" class="fadeIn fourth" value="Ingresar" [disabled]='formulario.invalid'>
         </form>
+        <p> {{mensaje}} </p>
       </div>
       <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
         <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
