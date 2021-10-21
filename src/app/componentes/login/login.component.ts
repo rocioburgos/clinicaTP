@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['']);
         } else {
           this.mensaje = 'Verifique su email.';
-        } 
+        }
       } else {
         this.router.navigate(['registro']);
       }
@@ -49,14 +49,14 @@ export class LoginComponent implements OnInit {
 
 
 
-  completar(perfil:string){
-    if(perfil =='especialista'){
-    this.formulario.setValue({'email':'rocioburgos00@gmail.com', 'clave':'123456'})  
-  }else if(perfil=='administrador'){
+  completar(perfil: string) {
+    if (perfil == 'especialista') {
+      this.formulario.setValue({ 'email': 'rocioburgos00@gmail.com', 'clave': '123456' })
+    } else if (perfil == 'administrador') {
 
-  }else if(perfil == 'paciente'){
-    
-  }
+    } else if (perfil == 'paciente') {
+
+    }
   }
 
 }
