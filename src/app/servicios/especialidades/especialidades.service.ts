@@ -11,9 +11,7 @@ export class EspecialidadesService {
 
   private especialidadesCollection:AngularFirestoreCollection<any>;
   encuestas:Observable<any[]>;
-  constructor(private readonly afs: AngularFirestore) { 
-    
-
+  constructor(private readonly afs: AngularFirestore) {  
     this.especialidadesCollection = afs.collection<any>('especialidades');
     this.encuestas= this.especialidadesCollection.valueChanges();
   }
@@ -25,6 +23,6 @@ export class EspecialidadesService {
   }
 
   traerEspecialidades(){
-    
+    return this.especialidadesCollection.valueChanges({idField: "doc_id"});
   }
 }

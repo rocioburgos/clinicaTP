@@ -47,4 +47,16 @@ export class LoginComponent implements OnInit {
     }
   }
 
+
+
+  completar(perfil:string){
+    if(perfil =='especialista'){
+    this.formulario.setValue({'email':'rocioburgos00@gmail.com', 'clave':'123456'})  
+  }else if(perfil=='administrador'){
+
+  }else if(perfil == 'paciente'){
+    
+  }
+  }
+
 }

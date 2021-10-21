@@ -14,11 +14,14 @@ import { FormsModule , ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from "@angular/fire/compat";
 import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { environment } from 'src/environments/environment';
 import { HomeAdminComponent } from './componentes/home-admin/home-admin.component';
  
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +41,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule ,
-    NgbModule //PARA LOS USAR LOS MODALES DE BOOTSTRAP
+    AngularFireStorageModule,
+    NgbModule, //PARA LOS USAR LOS MODALES DE BOOTSTRAP
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -11,7 +11,8 @@ export const environment = {
     storageBucket: "tpclinica-282c4.appspot.com",
     messagingSenderId: "280488327089",
     appId: "1:280488327089:web:5dd19cb67214056891af90"
-  }
+  },
+  baseUrl: 'http://localhost:4200'
 };
 
 /*
