@@ -31,10 +31,13 @@ export class LoginComponent implements OnInit {
 
     try {
       let usuario = await this.authSrv.loginUser(datos.email, datos.clave);
-
       if (usuario != null) {
-        if (usuario.user?.emailVerified) {
-          this.router.navigate(['']);
+        if (usuario.user?.emailVerified) { 
+          if ("administrador" == "administrador") {
+            this.router.navigate(['panelUsuarios']);
+          } else {
+            this.router.navigate(['']);
+          }
         } else {
           this.mensaje = 'Verifique su email.';
         }
@@ -53,9 +56,10 @@ export class LoginComponent implements OnInit {
     if (perfil == 'especialista') {
       this.formulario.setValue({ 'email': 'rocioburgos00@gmail.com', 'clave': '123456' })
     } else if (perfil == 'administrador') {
-
+      this.formulario.setValue({ 'email': '', 'clave': '' })
     } else if (perfil == 'paciente') {
 
+      this.formulario.setValue({ 'email': '', 'clave': '' })
     }
   }
 

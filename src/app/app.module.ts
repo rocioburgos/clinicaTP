@@ -22,6 +22,7 @@ import { HomeAdminComponent } from './componentes/home-admin/home-admin.componen
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { HttpClientModule } from '@angular/common/http';
+import { PanelUsuariosComponent } from './componentes/panel-usuarios/panel-usuarios.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +31,8 @@ import { HttpClientModule } from '@angular/common/http';
     RegistroComponent,
     NavbarComponent,
     FooterComponent,
-    HomeAdminComponent
+    HomeAdminComponent,
+    PanelUsuariosComponent
   ],
   imports: [
     CommonModule ,

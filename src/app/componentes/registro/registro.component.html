@@ -14,26 +14,30 @@
 
     <br>
     <div *ngIf='paciente!= null'>
+
       <div *ngIf='paciente && paciente!= null'>
         <form [formGroup]='formulario' (ngSubmit)='aceptarPaciente()'>
 
           <div class="form-group">
             <input type="text" formControlName='nombre' class="fadeIn second" placeholder="Nombre">
+            <br>
             <small class="form-text text-muted"
               *ngIf="formulario.get('nombre')?.hasError('required') && formulario.get('nombre')?.touched">El Nombre es
               requerido.</small>
           </div>
 
-
           <div class="form-group">
             <input type="text" formControlName='apellido' class="fadeIn second" placeholder="Apellido">
+            <br>
             <small class="form-text text-muted"
-              *ngIf="formulario.get('apellido')?.hasError('apellido') && formulario.get('apellido')?.touched">El
-              apellido es requerido.</small>
+              *ngIf="formulario.get('apellido')?.hasError('required') && formulario.get('apellido')?.touched">El apellido es
+              requerido.</small>
           </div>
+
 
           <div class="form-group">
             <input type="number" formControlName='edad' class="fadeIn second" placeholder="Edad">
+            <br>
             <small class="form-text text-muted"
               *ngIf="formulario.get('edad')?.hasError('required') && formulario.get('edad')?.touched">La edad es
               requerida.</small>
@@ -48,15 +52,17 @@
 
           <div class="form-group">
             <input type="number" formControlName='dni' class="fadeIn second" placeholder="DNI">
+            <br>
             <small class="form-text text-muted"
-              *ngIf="formulario.get('dni')?.hasError('dni') && formulario.get('dni')?.touched">El
+              *ngIf="formulario.get('dni')?.hasError('required') && formulario.get('dni')?.touched">El
               dni es requerido.</small>
           </div>
 
           <div class="form-group">
             <input type="text" formControlName='obraSocial' class="fadeIn second" placeholder="Obra social">
+            <br>
             <small class="form-text text-muted"
-              *ngIf="formulario.get('obraSocial')?.hasError('obraSocial') && formulario.get('obraSocial')?.touched">La
+              *ngIf="formulario.get('obraSocial')?.hasError('required') && formulario.get('obraSocial')?.touched">La
               obraSocial es requerida.</small>
           </div>
 
@@ -64,15 +70,17 @@
           <div class="form-group">
 
             <input type="email" formControlName='email' class="fadeIn second" placeholder="Email">
+            <br>
             <small class="form-text text-muted"
-              *ngIf="formulario.get('email')?.hasError('email') && formulario.get('email')?.touched">El email es
+              *ngIf="formulario.get('email')?.hasError('required') && formulario.get('email')?.touched">El email es
               requerido.</small>
           </div>
 
           <div class="form-group">
             <input type="password" formControlName='clave' class="fadeIn third" placeholder="Clave">
+            <br>
             <small class="form-text text-muted"
-              *ngIf="formulario.get('clave')?.hasError('clave') && formulario.get('clave')?.touched">La clave es
+              *ngIf="formulario.get('clave')?.hasError('required') && formulario.get('clave')?.touched">La clave es
               requerida.</small>
           </div>
 
@@ -80,18 +88,20 @@
           <div class="form-group">
             <input class="file-input" type="file"  formControlName="archivo1"
               (change)="cambioArchivo($event)">
+              <br>
             <img src="{{img}}" width="100px">
             <small class="form-text text-muted"
-              *ngIf="formularioEspecialista.get('archivo1')?.hasError('archivo1') && formularioEspecialista.get('archivo1')?.touched">El 
+              *ngIf="formularioEspecialista.get('archivo1')?.hasError('required') && formularioEspecialista.get('archivo1')?.touched">El 
               archivo es requerida.</small>
           </div>    
           
           <div class="form-group">
             <input class="file-input" type="file"  formControlName="archivo2"
               (change)="cambioArchivo($event)">
+              <br>
             <img src="{{img}}" width="100px">
             <small class="form-text text-muted"
-              *ngIf="formularioEspecialista.get('archivo2')?.hasError('archivo') && formularioEspecialista.get('archivo2')?.touched">El 
+              *ngIf="formularioEspecialista.get('archivo2')?.hasError('required') && formularioEspecialista.get('archivo2')?.touched">El 
               archivo es requerida.</small>
           </div>
  
@@ -106,7 +116,7 @@
       <div *ngIf='!paciente && paciente!= null'>
         <form [formGroup]='formularioEspecialista' (ngSubmit)='aceptarEspecialista()'>
           <div class="form-group">
-            <input type="text" formControlName='nombre_' class="fadeIn second" placeholder="Nombre">
+            <input type="text" formControlName='nombre_' class="fadeIn second" placeholder="Nombre"><br>
             <small class="form-text text-muted"
               *ngIf="formularioEspecialista.get('nombre_')?.hasError('required') && formularioEspecialista.get('nombre_')?.touched">El
               Nombre es
@@ -115,14 +125,14 @@
 
 
           <div class="form-group">
-            <input type="text" formControlName='apellido' class="fadeIn second" placeholder="Apellido">
+            <input type="text" formControlName='apellido' class="fadeIn second" placeholder="Apellido"><br>
             <small class="form-text text-muted"
-              *ngIf="formularioEspecialista.get('apellido')?.hasError('apellido') && formularioEspecialista.get('apellido')?.touched">El
+              *ngIf="formularioEspecialista.get('apellido')?.hasError('required') && formularioEspecialista.get('apellido')?.touched">El
               apellido es requerido.</small>
           </div>
 
           <div class="form-group">
-            <input type="number" formControlName='edad' class="fadeIn second" placeholder="Edad">
+            <input type="number" formControlName='edad' class="fadeIn second" placeholder="Edad"><br>
             <small class="form-text text-muted"
               *ngIf="formularioEspecialista.get('edad')?.hasError('required') && formularioEspecialista.get('edad')?.touched">La
               edad es
@@ -139,9 +149,9 @@
 
 
           <div class="form-group">
-            <input type="number" formControlName='dni' class="fadeIn second" placeholder="DNI">
+            <input type="number" formControlName='dni' class="fadeIn second" placeholder="DNI"><br>
             <small class="form-text text-muted"
-              *ngIf="formularioEspecialista.get('dni')?.hasError('dni') && formularioEspecialista.get('dni')?.touched">El
+              *ngIf="formularioEspecialista.get('dni')?.hasError('required') && formularioEspecialista.get('dni')?.touched">El
               dni es requerido.</small>
           </div>
 
@@ -158,17 +168,17 @@
           <br>
           <div class="form-group">
 
-            <input type="email" formControlName='email' class="fadeIn second" placeholder="Email">
+            <input type="email" formControlName='email' class="fadeIn second" placeholder="Email"><br>
             <small class="form-text text-muted"
-              *ngIf="formularioEspecialista.get('email')?.hasError('email') && formularioEspecialista.get('email')?.touched">El
+              *ngIf="formularioEspecialista.get('email')?.hasError('required') && formularioEspecialista.get('email')?.touched">El
               email es
               requerido.</small>
           </div>
 
           <div class="form-group">
-            <input type="password" formControlName='clave' class="fadeIn third" placeholder="Clave">
+            <input type="password" formControlName='clave' class="fadeIn third" placeholder="Clave"><br>
             <small class="form-text text-muted"
-              *ngIf="formularioEspecialista.get('clave')?.hasError('clave') && formularioEspecialista.get('clave')?.touched">La
+              *ngIf="formularioEspecialista.get('clave')?.hasError('required') && formularioEspecialista.get('clave')?.touched">La
               clave es
               requerida.</small>
           </div>
@@ -176,10 +186,10 @@
 
           <div class="form-group">
             <input class="file-input" type="file"  formControlName="archivo"
-              (change)="cambioArchivo($event)">
+              (change)="cambioArchivo($event)"><br>
             <img src="{{img}}" width="100px">
             <small class="form-text text-muted"
-              *ngIf="formularioEspecialista.get('archivo')?.hasError('archivo') && formularioEspecialista.get('archivo')?.touched">El 
+              *ngIf="formularioEspecialista.get('archivo')?.hasError('required') && formularioEspecialista.get('archivo')?.touched">El 
               archivo es requerida.</small>
           </div>
 
@@ -202,6 +212,9 @@
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label">Especialidad:</label>
               <input type="text" class="form-control" id="recipient-name" formControlName='nombre'>
+              <br>
+            <small class="form-text text-muted"
+            *ngIf="formulario_Especialidad.get('nombre')?.hasError('required') && formulario_Especialidad.get('nombre')?.touched">El nombre de la especialidad es requerido.</small>
             </div>
           </form>
         </div>

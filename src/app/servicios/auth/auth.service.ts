@@ -25,6 +25,7 @@ export class AuthService {
     async loginUser(email: string, clave: string) {
     try {
       const result = this.afAuth.signInWithEmailAndPassword(email, clave);
+      localStorage.setItem('usuario_clinica', JSON.stringify ({'email': email,  'sesion':'activa' , 'perfil':'' }));
       return result;
       
     } catch (error) {
@@ -35,6 +36,7 @@ export class AuthService {
 
 
   public async LogOut() { 
+    localStorage.removeItem('usuario_clinica');
     this.afAuth.signOut();
     //actualizar el firebase
   }

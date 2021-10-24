@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/servicios/auth/auth.service';
 import { EspecialidadesService } from 'src/app/servicios/especialidades/especialidades.service';
 import { EspecialistasService } from 'src/app/servicios/especialistas/especialistas.service';
-import { PacientesService } from 'src/app/servicios/pacientes/pacientes.service';
+ 
   
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'; 
 
@@ -12,6 +12,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FilesService } from '../../servicios/files/files.service';
 import { Observable } from 'rxjs';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { UsuariosService } from 'src/app/servicios/usuarios/usuarios.service';
 
 @Component({
   selector: 'app-registro',
@@ -46,8 +47,7 @@ export class RegistroComponent implements OnInit {
   constructor(private fb: FormBuilder, 
     private fbesp: FormBuilder,
     private router: Router,
-    private pacienteSrv: PacientesService,
-    private especialistasSrv: EspecialistasService,
+    private usuariosSrv: UsuariosService, 
     private especialidadesSrv: EspecialidadesService,
     private authSrv: AuthService,
     private fileSrv:FilesService,
@@ -121,7 +121,7 @@ export class RegistroComponent implements OnInit {
     try {
       const user = await this.authSrv.registerUser(datos.email, datos.clave); 
       if (user) {
-        this.pacienteSrv.registrarPaciente(datos).then((res) => {
+        this.usuariosSrv.registrarUsuario(datos).then((res) => {
           console.log(datos);
           this.mensaje = 'Usuario creado';
         });
@@ -155,7 +155,7 @@ export class RegistroComponent implements OnInit {
     try {
       const user = await this.authSrv.registerUser(datos.email, datos.clave); 
       if (user) {
-        this.especialistasSrv.registrarEspecialista(datos).then((res) => {
+        this.usuariosSrv.registrarUsuario(datos).then((res) => {
           console.log(datos);
           this.mensaje = 'Usuario creado';
         }); 
@@ -198,12 +198,10 @@ export class RegistroComponent implements OnInit {
   }
 
   //Sube el archivo a Cloud Storage
- async  subirArchivo() {
- 
+ async  subirArchivo() { 
     let archivo = this.formularioEspecialista.get('archivo');
     let referencia = this.fileSrv.referenciaCloudStorage(this.nombreArchivo);
-    let tarea = this.fileSrv.tareaCloudStorage(this.nombreArchivo, archivo)
-    
+    let tarea = this.fileSrv.tareaCloudStorage(this.nombreArchivo, archivo); 
     
     tarea.then(async res=>{
       const downloadURL = await  res.ref.getDownloadURL();
