@@ -17,7 +17,8 @@ export class RegistroPacienteComponent implements OnInit {
   formulario: FormGroup;
   completarForm = true;
   mensajeImagen:string='';
-
+  img1='';
+  img2='';
   public mensajeArchivo = 'No hay un archivo seleccionado';
 
   public nombreArchivo = '';
@@ -38,7 +39,7 @@ export class RegistroPacienteComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       clave: ['', Validators.required],
       archivo1: [null, Validators.required],
-     // archivo2: [null, Validators.required]
+      archivo2: [null, Validators.required]
     });}
 
   ngOnInit(): void {
@@ -55,8 +56,8 @@ export class RegistroPacienteComponent implements OnInit {
       email: form.email,
       obraSocial: form.obraSocial,
       clave: form.clave,
-      archivo2: form.archivo1,
-      archivo1: form.archivo2,
+      archivo2: this.img1,
+      archivo1: this.img2,
       perfil:'paciente' 
     }
 
@@ -72,40 +73,36 @@ export class RegistroPacienteComponent implements OnInit {
 
 
   }
-
-
-
-    //Evento que se gatilla cuando el input de tipo archivo cambia
-    public cambioArchivo(event:any) {
-      if (event.target.files.length > 0) {
-        for (let i = 0; i < event.target.files.length; i++) { 
-         // event.target.files[i].name =this.getFilePath();
-         this.mensajeImagen='Subiendo imagen...';
-          this.nombreArchivo = this.getFilePath(); //= event.target.files[i].name;  
-         
-          this.subirArchivo();
-        }
-      } else {
-        this.mensajeArchivo = 'No hay un archivo seleccionado';
-      }
-    }
-  
-    //Sube el archivo a Cloud Storage
-   async  subirArchivo() { 
-    /*  let archivo = this.formulario.get('archivo1');
-      let referencia = this.fileSrv.referenciaCloudStorage(this.nombreArchivo);
-      let tarea = this.fileSrv.tareaCloudStorage(this.nombreArchivo, archivo); 
-      
-      tarea.then(async res=>{
-        const downloadURL = await  res.ref.getDownloadURL();
-        console.log(downloadURL);
-        //this.nombreArchivo= downloadURL;
-        this.img = downloadURL;
-        this.mensajeImagen='';
-      }); */
-    }
-  
+ 
     getFilePath() {
-      return new Date().getTime() + '-usuarios';
+      return new Date().getTime() + '-paciente';
     }
+
+
+     //Evento que se gatilla cuando el input de tipo archivo cambia
+  public cambioArchivo1(event: any) { 
+    this.img1 = this.getFilePath();
+    let task = this.fileSrv.uploadFile(this.img1,event.target.files[0]  ).then((res) => {
+      res.ref.getDownloadURL()
+                             .then(ress => {this.img1 = (ress);
+                                    })  ;
+   }); 
+  } 
+
+
+       //Evento que se gatilla cuando el input de tipo archivo cambia
+       public cambioArchivo2(event: any) { 
+         
+        this.img2 = this.getFilePath();
+        let task = this.fileSrv.uploadFile(this.img2,event.target.files[0]  ).then((res) => {
+          res.ref.getDownloadURL()
+                                 .then(ress => {this.img2 = (ress);
+                                        })  ;
+       }); 
+
+      } 
+
+ 
+
+   
 }

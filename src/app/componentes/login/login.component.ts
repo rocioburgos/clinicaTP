@@ -31,18 +31,21 @@ export class LoginComponent   {
     try {
       await this.authSrv.loginUser(datos.email, datos.clave).then(async (res) => { 
         const user = (await this.usrSrv.getUserByUid('' + res?.user?.uid).toPromise()).data(); 
-        localStorage.setItem('usuario_clinica', JSON.stringify({ ...user })); 
+        
 
         if (res.user?.emailVerified && user.perfil == 'administrador') {
+          localStorage.setItem('usuario_clinica', JSON.stringify({ ...user })); 
           this.router.navigate(['panelUsuarios']);
         } else if (res.user?.emailVerified && user.perfil == 'especialista') {
           if (user.estado == 'aceptado') {
-
+            localStorage.setItem('usuario_clinica', JSON.stringify({ ...user })); 
             this.router.navigate(['']);
           } else {
             console.log("querido especialista todavia no fue aceptado.");
+            this.mensaje= 'querido especialista todavia no fue aceptado.';
           }
         } else if (res.user?.emailVerified && user.perfil == 'paciente') {
+          localStorage.setItem('usuario_clinica', JSON.stringify({ ...user })); 
           this.router.navigate(['']);
         } else if (!res.user?.emailVerified) {
           this.router.navigate(['activarUsuario']);
@@ -60,9 +63,9 @@ export class LoginComponent   {
     if (perfil == 'especialista') {
       this.formulario.setValue({ 'email': 'rocioburgos00@gmail.com', 'clave': '123456' })
     } else if (perfil == 'administrador') {
-      this.formulario.setValue({ 'email': 'admin@clinica.com', 'clave': '123456' })
+      this.formulario.setValue({ 'email': 'clinica.adm2021@gmail.com', 'clave': '123456' })
     } else if (perfil == 'paciente') { 
-      this.formulario.setValue({ 'email': 'paciente@clinica.com', 'clave': '123456' })
+      this.formulario.setValue({ 'email': 'juanperez.pac2021@gmail.com', 'clave': '123456' })
     }
   } 
 

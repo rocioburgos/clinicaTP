@@ -17,23 +17,7 @@ export class FilesService {
     private storage: AngularFireStorage
   ) { 
    }
-
-  //Tarea para subir archivo
- async   subirImagen(  datos: any) {
-   this.filePath = datos.name;
-   const refFile= this.storage.ref(this.filePath);
-  
-   const task= this.storage.upload(this.filePath, datos);
-    task.snapshotChanges()
-    .pipe(
-      finalize(()=>{
-        refFile.getDownloadURL().subscribe(urlImagen=>{
-          this.dowloandURL= urlImagen;
-         return urlImagen;
-        })
-      })
-    ) 
-  }
+ 
 
 
   uploadFile(filePath:string, file:any)  {

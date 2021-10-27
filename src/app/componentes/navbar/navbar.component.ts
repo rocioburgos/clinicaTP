@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class NavbarComponent implements OnInit {
 
   usuario:any;
-  logeado?:boolean ;
+  logeado?:boolean= false ;
   administrador?:boolean;
   especialista?:boolean;
   paciente?:boolean;
@@ -18,7 +18,7 @@ export class NavbarComponent implements OnInit {
 
      let ls = localStorage.getItem('usuario_clinica');
 
-    if(  ls != null){
+    if( ls != null){
       this.logeado= true;
          this.usuario =    JSON.parse( ls); 
       if(  this.usuario.perfil =='administrador'){

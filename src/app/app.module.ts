@@ -7,8 +7,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './componentes/home/home.component';
 import { LoginComponent } from './componentes/login/login.component';
 import { RegistroComponent } from './componentes/registro/registro.component';
-import { NavbarComponent } from './componentes/navbar/navbar.component';
-import { FooterComponent } from './componentes/footer/footer.component';
+import { NavbarComponent } from './componentes/navbar/navbar.component'; 
 import { FormsModule , ReactiveFormsModule } from '@angular/forms';
 
 import { AngularFireModule } from "@angular/fire/compat";
@@ -34,8 +33,7 @@ import { RegistroPacienteComponent } from './componentes/registro/registro-pacie
     HomeComponent,
     LoginComponent,
     RegistroComponent,
-    NavbarComponent,
-    FooterComponent,
+    NavbarComponent, 
     HomeAdminComponent,
     PanelUsuariosComponent,
     LogoutComponent,
