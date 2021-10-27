@@ -23,6 +23,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { HttpClientModule } from '@angular/common/http';
 import { PanelUsuariosComponent } from './componentes/panel-usuarios/panel-usuarios.component';
+import { LogoutComponent } from './componentes/logout/logout.component';
+import { ActivacionUserComponent } from './componentes/activacion-user/activacion-user.component';
+import { RegistroAdministradorComponent } from './componentes/registro/registro-administrador/registro-administrador.component';
+import { RegistroEspecialistaComponent } from './componentes/registro/registro-especialista/registro-especialista.component';
+import { RegistroPacienteComponent } from './componentes/registro/registro-paciente/registro-paciente.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +37,12 @@ import { PanelUsuariosComponent } from './componentes/panel-usuarios/panel-usuar
     NavbarComponent,
     FooterComponent,
     HomeAdminComponent,
-    PanelUsuariosComponent
+    PanelUsuariosComponent,
+    LogoutComponent,
+    ActivacionUserComponent,
+    RegistroAdministradorComponent,
+    RegistroEspecialistaComponent,
+    RegistroPacienteComponent
   ],
   imports: [
     CommonModule ,

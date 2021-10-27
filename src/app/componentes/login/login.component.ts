@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/servicios/auth/auth.service';
+import { UsuariosService } from 'src/app/servicios/usuarios/usuarios.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -11,7 +12,8 @@ import { AuthService } from 'src/app/servicios/auth/auth.service';
 export class LoginComponent implements OnInit {
   formulario: FormGroup;
   mensaje: string = '';
-  constructor(private fb: FormBuilder, private authSrv: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private authSrv: AuthService, private router: Router,
+    private usrSrv: UsuariosService) {
     this.formulario = fb.group({
       email: ['', [Validators.required, Validators.email]],
       clave: ['', Validators.required],
@@ -27,29 +29,54 @@ export class LoginComponent implements OnInit {
     let datos = {
       email: form.email,
       clave: form.clave,
-    }
+    };
 
     try {
-      let usuario = await this.authSrv.loginUser(datos.email, datos.clave);
-      if (usuario != null) {
-        if (usuario.user?.emailVerified) { 
-          if ("administrador" == "administrador") {
-            this.router.navigate(['panelUsuarios']);
-          } else {
+      await this.authSrv.loginUser(datos.email, datos.clave).then(async (res) => {
+
+        const user = (await this.usrSrv.getUserByUid('' + res?.user?.uid).toPromise()).data();
+
+
+        localStorage.setItem('usuario_clinica', JSON.stringify({ ...user }));
+
+
+        if (res.user?.emailVerified && user.perfil == 'administrador') {
+          this.router.navigate(['panelUsuarios']);
+        } else if (res.user?.emailVerified && user.perfil == 'especialista') {
+          if (user.estado == 'aceptado') {
+
             this.router.navigate(['']);
+          } else {
+            console.log("querido especialista todavia no fue aceptado.");
           }
+        } else if (res.user?.emailVerified && user.perfil == 'paciente') {
+          this.router.navigate(['']);
+        } else if (!res.user?.emailVerified) {
+          this.router.navigate(['activarUsuario']);
         } else {
-          this.mensaje = 'Verifique su email.';
+          this.router.navigate(['registro']);
         }
-      } else {
-        this.router.navigate(['registro']);
-      }
-    } catch (error) {
-      console.log(error);
-      this.mensaje = '' + error;
+      });
+
+      //TRAER EL PERFIL DEL LS
+      /* let perfil:string= this.authSrv.getPerfil(datos.email);
+       if (usuario != null) {
+  
+  
+         if (usuario.user?.emailVerified && perfil == "administrador") {
+           this.router.navigate(['panelUsuarios']);
+         } else if (!usuario.user?.emailVerified) {
+           this.router.navigate(['activarUsuario']);
+         }else if(usuario.user?.emailVerified){ 
+           this.router.navigate(['']);
+         } else {
+           this.router.navigate(['registro']);
+         }
+       }*/
+    } catch (err) {
+      console.log(err);
     }
   }
-
 
 
   completar(perfil: string) {

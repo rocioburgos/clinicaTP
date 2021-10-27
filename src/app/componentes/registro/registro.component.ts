@@ -26,7 +26,7 @@ export class RegistroComponent implements OnInit {
   paciente: any;
   tipoUsuario = ['Especialista', 'Paciente'];
   especialidades:Array<any>=[];
-
+  especialidadesElegidas:Array<any>=[];
   // Seleccionamos o iniciamos el valor '0' del <select>
   opcionSeleccionado: string = '0';
   verSeleccion: string = ''; 
@@ -36,6 +36,7 @@ export class RegistroComponent implements OnInit {
   completarForm = true;
   mensaje: string = ''; 
   img='';
+  mensajeImagen:string='';
 
   public mensajeArchivo = 'No hay un archivo seleccionado';
    
@@ -72,10 +73,11 @@ export class RegistroComponent implements OnInit {
       apellido: ['', Validators.required],
       edad: ['', [Validators.required, Validators.min(18), Validators.max(99)]],
       dni: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.maxLength(10), Validators.minLength(10)]],
-      especialidad: ['', Validators.required],
+  
       email: ['', [Validators.required, Validators.email]],
       clave: ['', Validators.required],
-      archivo:[null, Validators.required]
+      archivo:[null, Validators.required],
+      especialidadCheck:[null, this.validarEspecialidad ]
     });
  
     this.formulario_Especialidad = fb.group({
@@ -91,6 +93,15 @@ export class RegistroComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  
+  validarEspecialidad(control:AbstractControl){
+    const especialidadesElegidas = control.value;
+    if( especialidadesElegidas== null ||  especialidadesElegidas.length <= 0){
+      return {vacio: true}
+    }else{
+      return null;
+    }
+  }
   capturar() {
     // Pasamos el valor seleccionado a la variable verSeleccion
     this.verSeleccion = this.opcionSeleccionado;
@@ -119,14 +130,10 @@ export class RegistroComponent implements OnInit {
     }
 
     try {
-      const user = await this.authSrv.registerUser(datos.email, datos.clave); 
-      if (user) {
-        this.usuariosSrv.registrarUsuario(datos).then((res) => {
-          console.log(datos);
-          this.mensaje = 'Usuario creado';
-        });
-
-      }
+      const user = await this.authSrv.registerUser(datos.email, datos.clave).then((credential)=>{
+        this.usuariosSrv.setItemWithId( datos, credential.user.uid)
+        .then(()=>  this.router.navigate(['activarUsuario']));;
+      });  
     } catch (error) {
       console.log(error);
       this.mensaje=''+error;
@@ -144,22 +151,19 @@ export class RegistroComponent implements OnInit {
       apellido: formEspe.apellido,
       edad: formEspe.edad,
       dni: formEspe.dni,
-      email: formEspe.email,
-      especialidad: formEspe.especialidad,
+      email: formEspe.email, 
       clave: formEspe.clave,
       archivo: this.nombreArchivo,
       perfil:'especialista',
-      estado: 'pendiente'
+      estado: 'pendiente',
+      espe: this.especialidadesElegidas
     };
 
     try {
-      const user = await this.authSrv.registerUser(datos.email, datos.clave); 
-      if (user) {
-        this.usuariosSrv.registrarUsuario(datos).then((res) => {
-          console.log(datos);
-          this.mensaje = 'Usuario creado';
-        }); 
-      } 
+      const user = await this.authSrv.registerUser(datos.email, datos.clave).then((credential)=>{
+        this.usuariosSrv.setItemWithId( datos, credential.user.uid)
+        .then(()=>  this.router.navigate(['activarUsuario']));;
+      });  
     } catch (error) {
       console.log(error);
       this.mensaje=''+error;
@@ -181,13 +185,22 @@ export class RegistroComponent implements OnInit {
     });
   }
 
- 
+  selEsp(event:any){  
+      if(event.target.checked== true){
+        this.especialidadesElegidas.push(event.target.value);
+      }
+      else if(event.target.checked== false){ 
+        const indice = this.especialidadesElegidas.indexOf(event.target.value).valueOf();
+        this.especialidadesElegidas.splice(indice, 1);
+      } 
+  }
 
   //Evento que se gatilla cuando el input de tipo archivo cambia
   public cambioArchivo(event:any) {
     if (event.target.files.length > 0) {
       for (let i = 0; i < event.target.files.length; i++) { 
        // event.target.files[i].name =this.getFilePath();
+       this.mensajeImagen='Subiendo imagen...';
         this.nombreArchivo = this.getFilePath(); //= event.target.files[i].name;  
        
         this.subirArchivo();
@@ -208,8 +221,8 @@ export class RegistroComponent implements OnInit {
       console.log(downloadURL);
       //this.nombreArchivo= downloadURL;
       this.img = downloadURL;
-    });
- 
+      this.mensajeImagen='';
+    }); 
   }
 
   getFilePath() {
@@ -224,5 +237,8 @@ export class RegistroComponent implements OnInit {
        console.log(error);
      });
    }
+
+
+ 
 
 }

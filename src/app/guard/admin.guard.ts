@@ -6,10 +6,23 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AdminGuard implements CanActivate {
+ 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
+    state: RouterStateSnapshot): boolean { 
+
+      let ls = localStorage.getItem('usuario_clinica');
+
+      if( ls != null){
+        let userJson =    JSON.parse(ls); 
+        if(  userJson.perfil =='administrador'){
+          return true;
+        }
+      }else{
+        return   false;
+      }
+
+      return false;
+
   }
-  
 }

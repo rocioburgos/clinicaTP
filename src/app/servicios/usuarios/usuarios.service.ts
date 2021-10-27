@@ -1,25 +1,39 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
  
-import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class UsuariosService {
+ 
+  private usuariosCollection: AngularFirestoreCollection<any>;
 
-
-  private usuariosCollection:AngularFirestoreCollection<any>;
+  constructor(private readonly afs: AngularFirestore) {
+    this.usuariosCollection = afs.collection('usuarios');
+  }
   
-  constructor(private readonly afs: AngularFirestore) {   
-    this.usuariosCollection = afs.collection<any>('usuarios'); 
+  setItemWithId(item:any, id:string) {
+    return this.usuariosCollection.doc(id).set(Object.assign({}, {uid: id, ...item}  ));    
+  }
+
+  traerUsuarios(){ 
+    this.usuariosCollection = this.afs.collection('usuarios', ref => ref.where('perfil', '==', 'especialista'));
+    return this.usuariosCollection.valueChanges({idField: "doc_id"});
+  }
+ 
+
+
+  getUserByUid(uid:string){
+    return this.getItemById(uid);
+  }
+
+  protected getItemById(id:string){
+    return this.usuariosCollection.doc(id).get();
   }
 
 
-  registrarUsuario(datoUser:any){ 
-    this.usuariosCollection =  this.afs.collection('usuarios');  
-    return this.usuariosCollection.add(Object.assign({},datoUser)); 
+  actualizarEstado(id:string, estado:string){
+   return  this.usuariosCollection.doc(id).update({estado: estado});
   }
 
-
-  //this.afs.collection('usuarios', ref => ref.where('','==',''))
 }

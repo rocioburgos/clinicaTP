@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable } from 'rxjs'; 
+import { tap, map } from 'rxjs/operators';
+import { UsuariosService } from '../usuarios/usuarios.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,8 @@ import { Observable } from 'rxjs';
 export class AuthService {
 
   constructor(
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private usrSrv:UsuariosService
   ) { }
 
 
@@ -22,18 +25,11 @@ export class AuthService {
   }
 
 
-    async loginUser(email: string, clave: string) {
-    try {
-      const result = this.afAuth.signInWithEmailAndPassword(email, clave);
-      localStorage.setItem('usuario_clinica', JSON.stringify ({'email': email,  'sesion':'activa' , 'perfil':'' }));
-      return result;
-      
-    } catch (error) {
-      console.log(error);
-    }
-    return null;
+    async loginUser(email: string, clave: string) { 
+      const result = this.afAuth.signInWithEmailAndPassword(email, clave); 
+    return result;
   }
-
+ 
 
   public async LogOut() { 
     localStorage.removeItem('usuario_clinica');
