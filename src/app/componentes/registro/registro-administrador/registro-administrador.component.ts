@@ -19,7 +19,7 @@ export class RegistroAdministradorComponent implements OnInit {
   formulario: FormGroup;
   completarForm = true;
   mensajeImagen:string='';
-
+  image: any;
   public mensajeArchivo = 'No hay un archivo seleccionado';
 
   public nombreArchivo = '';
@@ -55,7 +55,7 @@ export class RegistroAdministradorComponent implements OnInit {
       dni: form.dni,
       email: form.email, 
       clave: form.clave,
-      archivo: form.archivo, 
+      archivo: this.img, 
       perfil:'administrador' 
       
     }
@@ -73,40 +73,28 @@ export class RegistroAdministradorComponent implements OnInit {
 
   }
 
-
-
-    //Evento que se gatilla cuando el input de tipo archivo cambia
-    public cambioArchivo(event:any) {
-      if (event.target.files.length > 0) {
-        for (let i = 0; i < event.target.files.length; i++) { 
-         // event.target.files[i].name =this.getFilePath();
-         this.mensajeImagen='Subiendo imagen...';
-          this.nombreArchivo = this.getFilePath(); //= event.target.files[i].name;  
-         
-          this.subirArchivo();
-        }
-      } else {
-        this.mensajeArchivo = 'No hay un archivo seleccionado';
-      }
-    }
+ 
   
-    //Sube el archivo a Cloud Storage
-   async  subirArchivo() { 
-      let archivo = this.formulario.get('archivo');
-      let referencia = this.fileSrv.referenciaCloudStorage(this.nombreArchivo);
-      let tarea = this.fileSrv.tareaCloudStorage(this.nombreArchivo, archivo); 
-      
-      tarea.then(async res=>{
-        const downloadURL = await  res.ref.getDownloadURL();
-        console.log(downloadURL);
-        //this.nombreArchivo= downloadURL;
-        this.img = downloadURL;
-        this.mensajeImagen='';
-      }); 
-    }
   
-    getFilePath() {
-      return new Date().getTime() + '-usuarios';
-    }
+  
+   //Evento que se gatilla cuando el input de tipo archivo cambia
+   public cambioArchivo(event: any) {
+    this.image = event.target.files[0]; 
+    this.subirArchivo(this.image); 
+  } 
+
+  //Sube el archivo a Cloud Storage
+  async subirArchivo(data: any) {
+    this.img = this.getFilePath()
+    let task = this.fileSrv.uploadFile(this.img, data).then((res) => {
+       res.ref.getDownloadURL()
+                              .then(ress => {this.img = (ress);
+                                     })  ;
+    }); 
+  }
+
+  getFilePath() {
+    return new Date().getTime() + '-administrador';
+  }
 
 }

@@ -92,7 +92,7 @@ export class RegistroPacienteComponent implements OnInit {
   
     //Sube el archivo a Cloud Storage
    async  subirArchivo() { 
-      let archivo = this.formulario.get('archivo1');
+    /*  let archivo = this.formulario.get('archivo1');
       let referencia = this.fileSrv.referenciaCloudStorage(this.nombreArchivo);
       let tarea = this.fileSrv.tareaCloudStorage(this.nombreArchivo, archivo); 
       
@@ -102,7 +102,7 @@ export class RegistroPacienteComponent implements OnInit {
         //this.nombreArchivo= downloadURL;
         this.img = downloadURL;
         this.mensajeImagen='';
-      }); 
+      }); */
     }
   
     getFilePath() {

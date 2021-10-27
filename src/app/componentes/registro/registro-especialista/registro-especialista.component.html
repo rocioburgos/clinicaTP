@@ -78,6 +78,11 @@
       <small class="form-text text-muted"
         *ngIf="formularioEspecialista.get('archivo')?.hasError('required') && formularioEspecialista.get('archivo')?.touched">El
         archivo es requerida.</small>
+
+
+        <small class="form-text text-muted"
+        *ngIf="formularioEspecialista.get('archivo')?.hasError('imagenCargada') "> 
+          es requerido.</small>
     </div>
 
     <button type="submit" class="btn btn-success" [disabled]='formularioEspecialista.invalid'>ENVIAR</button>

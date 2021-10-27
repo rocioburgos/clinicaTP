@@ -1,19 +1,73 @@
 <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+  <div *ngIf='!logeado'>
     <ul class="nav justify-content-end">
+      <li class="nav-item" *ngIf='!logeado'>
+        <a class="nav-link" href="registro">Registro</a>
+      </li>
+      <li class="nav-item" *ngIf='!logeado'>
+        <a class="nav-link" href="login">Login</a>
+      </li> 
+    </ul>
+  </div>
+  <div *ngIf='logeado'>
+
+    <div *ngIf='paciente'>
+      <ul class="nav justify-content-end">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+          <a class="nav-link active" aria-current="page" href="">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="registro">Registro</a>
+          <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Mis turnos</a>
+        </li>
+        <li><img src="{{usuario.archivo}}" width="50px" class="rounded"></li>
+        <li>
+          <p> {{usuario.nombre}} </p>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="login">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="homeAdmin" tabindex="-1" aria-disabled="true">Home admin</a>
+          <a class="nav-link" href="logout" tabindex="-1" aria-disabled="true">Cerrar sesion</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="logout" tabindex="-1" aria-disabled="true">Cerrar sesion</a>
         </li>
       </ul>
-  </nav>
+    </div>
+
+
+    <div *ngIf='especialista'>
+      <ul class="nav justify-content-end">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Turnos</a>
+        </li>
+        <li><img src="{{usuario.archivo}}" width="50px" class="rounded"></li>
+        <li>
+          <p> {{usuario.nombre}} </p>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="logout" tabindex="-1" aria-disabled="true">Cerrar sesion</a>
+        </li> 
+      </ul>
+    </div>
+
+    <div *ngIf='administrador'>
+      <ul class="nav justify-content-end">
+        <li class="nav-item"  >
+          <a class="nav-link" href="homeAdmin" tabindex="-1" aria-disabled="true">Home admin</a>
+        </li>
+
+        <li><img src="{{usuario.archivo}}" width="50px" class="rounded"></li>
+        <li>
+          <p> {{usuario.nombre}} </p>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="logout" tabindex="-1" aria-disabled="true">Cerrar sesion</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+
+</nav>

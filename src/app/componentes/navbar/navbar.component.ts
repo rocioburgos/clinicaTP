@@ -7,9 +7,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
+  usuario:any;
+  logeado?:boolean ;
+  administrador?:boolean;
+  especialista?:boolean;
+  paciente?:boolean;
   constructor() { }
 
   ngOnInit(): void {
+
+     let ls = localStorage.getItem('usuario_clinica');
+
+    if(  ls != null){
+      this.logeado= true;
+         this.usuario =    JSON.parse( ls); 
+      if(  this.usuario.perfil =='administrador'){
+          this.administrador= true;
+      }else if(this.usuario.perfil =='especialista'){
+        this.especialista= true;
+      }else if(this.usuario.perfil =='paciente'){
+        this.paciente= true;
+      }
+    }else{
+      this.logeado= false;
+    } 
   }
+
 
 }
