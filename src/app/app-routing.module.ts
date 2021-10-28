@@ -19,8 +19,11 @@ const routes: Routes = [
   {path:'homeAdmin', component:HomeAdminComponent, canActivate:[LoginGuard, AdminGuard] },
   {path:'panelUsuarios', component:PanelUsuariosComponent , canActivate:[LoginGuard, AdminGuard]},
   {path:'logout', component:LogoutComponent,  canActivate:[LoginGuard]},
-  {path:'activarUsuario', component:ActivacionUserComponent}
-  
+  {path:'activarUsuario', component:ActivacionUserComponent},
+  {
+    path: 'turnos',
+    loadChildren: () => import('./componentes/turnos/turnos.module').then(m => m.TurnosModule)
+  },
 ];
 
 @NgModule({

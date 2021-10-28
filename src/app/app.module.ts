@@ -27,6 +27,7 @@ import { ActivacionUserComponent } from './componentes/activacion-user/activacio
 import { RegistroAdministradorComponent } from './componentes/registro/registro-administrador/registro-administrador.component';
 import { RegistroEspecialistaComponent } from './componentes/registro/registro-especialista/registro-especialista.component';
 import { RegistroPacienteComponent } from './componentes/registro/registro-paciente/registro-paciente.component';
+import { PerfilComponent } from './componentes/perfil/perfil.component'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +41,8 @@ import { RegistroPacienteComponent } from './componentes/registro/registro-pacie
     ActivacionUserComponent,
     RegistroAdministradorComponent,
     RegistroEspecialistaComponent,
-    RegistroPacienteComponent
+    RegistroPacienteComponent,
+    PerfilComponent, 
   ],
   imports: [
     CommonModule ,
@@ -55,6 +57,7 @@ import { RegistroPacienteComponent } from './componentes/registro/registro-pacie
     NgbModule, //PARA LOS USAR LOS MODALES DE BOOTSTRAP
     HttpClientModule
   ],
+  exports: [NavbarComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
