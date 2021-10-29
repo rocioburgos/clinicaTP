@@ -5,6 +5,7 @@ import { HomeAdminComponent } from './componentes/home-admin/home-admin.componen
 import { HomeComponent } from './componentes/home/home.component';
 import { LoginComponent } from './componentes/login/login.component';
 import { LogoutComponent } from './componentes/logout/logout.component';
+import { ModalPruebaComponent } from './componentes/modal-prueba/modal-prueba.component';
 import { PanelUsuariosComponent } from './componentes/panel-usuarios/panel-usuarios.component';
 import { PerfilComponent } from './componentes/perfil/perfil.component';
 import { RegistroAdministradorComponent } from './componentes/registro/registro-administrador/registro-administrador.component';
@@ -27,6 +28,7 @@ const routes: Routes = [
     loadChildren: () => import('./componentes/turnos/turnos.module').then(m => m.TurnosModule)
   },
   {path:'perfil', component: PerfilComponent,canActivate:[LoginGuard]},
+  {path:'test', component: ModalPruebaComponent},
 ];
 
 @NgModule({

@@ -27,7 +27,8 @@ import { ActivacionUserComponent } from './componentes/activacion-user/activacio
 import { RegistroAdministradorComponent } from './componentes/registro/registro-administrador/registro-administrador.component';
 import { RegistroEspecialistaComponent } from './componentes/registro/registro-especialista/registro-especialista.component';
 import { RegistroPacienteComponent } from './componentes/registro/registro-paciente/registro-paciente.component';
-import { PerfilComponent } from './componentes/perfil/perfil.component'; 
+import { PerfilComponent } from './componentes/perfil/perfil.component';
+import { ModalPruebaComponent } from './componentes/modal-prueba/modal-prueba.component'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +43,8 @@ import { PerfilComponent } from './componentes/perfil/perfil.component';
     RegistroAdministradorComponent,
     RegistroEspecialistaComponent,
     RegistroPacienteComponent,
-    PerfilComponent, 
+    PerfilComponent,
+    ModalPruebaComponent, 
   ],
   imports: [
     CommonModule ,

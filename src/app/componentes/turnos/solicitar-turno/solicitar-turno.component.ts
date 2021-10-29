@@ -1,5 +1,6 @@
 import { ThisReceiver } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EspecialidadesService } from 'src/app/servicios/especialidades/especialidades.service';
 import { UsuariosService } from 'src/app/servicios/usuarios/usuarios.service';
 
@@ -11,8 +12,11 @@ import { UsuariosService } from 'src/app/servicios/usuarios/usuarios.service';
 export class SolicitarTurnoComponent implements OnInit {
   especialidades: Array<any> = [];
   especialidadesFiltro:Array<any>=[] ;
+  @ViewChild('modalMensaje') modal?: ElementRef;
 
-  constructor(private espSrv: EspecialidadesService, private usrSrv:UsuariosService) {
+
+  constructor(private espSrv: EspecialidadesService, private usrSrv:UsuariosService,
+    private modalService: NgbModal) {
     this.espSrv.traerEspecialidades().subscribe((data) => {
       data.forEach(element => {
         this.especialidades.push(element);
@@ -41,5 +45,12 @@ export class SolicitarTurnoComponent implements OnInit {
       });
     })
   }
+
+
+   
+
+abrir_reservas(){ 
+  this.modalService.open(this.modal);
+}
 
 }
