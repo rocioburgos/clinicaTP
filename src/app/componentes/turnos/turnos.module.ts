@@ -5,12 +5,14 @@ import { MisTurnosPacienteComponent } from './mis-turnos-paciente/mis-turnos-pac
  
 import { TurnosRoutingModule } from './turnos-routing.module';
 import { TurnosEspecialistaComponent } from './turnos-especialista/turnos-especialista.component';
+import { SolicitarTurnoComponent } from './solicitar-turno/solicitar-turno.component';
  
 
 @NgModule({
   declarations: [
     MisTurnosPacienteComponent,
     TurnosEspecialistaComponent,
+    SolicitarTurnoComponent,
   
   ],
   imports: [

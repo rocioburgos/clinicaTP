@@ -7,9 +7,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PerfilComponent implements OnInit {
 
-  constructor() { }
+  especialista?:boolean;
+  perfil:any;
+  constructor() { 
+    let ls = localStorage.getItem('usuario_clinica'); 
+    if( ls != null){ 
+         this.perfil =    JSON.parse( ls);  
+         if(this.perfil.perfil=='especialista'){
+           this.especialista=true;
+         }else{
+           this.especialista=false;
+         }
+    } 
+  }
 
   ngOnInit(): void {
+
   }
 
 }

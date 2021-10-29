@@ -36,4 +36,10 @@ export class UsuariosService {
    return  this.usuariosCollection.doc(id).update({estado: estado});
   }
 
+
+  traerEspecialistasFiltro( ){ 
+    return this.afs.collection('usuarios', ref => ref.where('perfil', '==',  'especialista' ))
+                      .valueChanges({idField: "doc_id"})  
+  }
+
 }

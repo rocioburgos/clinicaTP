@@ -16,9 +16,9 @@
           <a class="nav-link active" aria-current="page" href="">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="turnos" tabindex="-1" aria-disabled="true">Mis turnos</a>
+          <a class="nav-link" href="turnos/listadoTurnoPaciente" tabindex="-1" aria-disabled="true">Mis turnos</a>
         </li>
-        <li><img src="{{usuario.archivo1}}" width="30px" height="40px" class="rounded"></li>
+        <li><a href="perfil"> <img src="{{usuario.archivo1}}" width="30px" height="40px" class="rounded"> </a></li>
         <li>
           <p> {{usuario.nombre}} </p>
         </li>
@@ -37,7 +37,7 @@
         <li class="nav-item">
           <a class="nav-link" href="turnos/listadoTurnoEspecialista" tabindex="-1" aria-disabled="true">Turnos</a>
         </li>
-        <li><img src="{{usuario.archivo}}" width="50px" class="rounded"></li>
+        <li><a href="perfil"><img src="{{usuario.archivo}}" width="50px" class="rounded"></a></li>
         <li>
           <p> {{usuario.nombre}} </p>
         </li>
@@ -53,7 +53,7 @@
           <a class="nav-link" href="homeAdmin" tabindex="-1" aria-disabled="true">Home admin</a>
         </li>
 
-        <li><img src="{{usuario.archivo}}" width="50px" class="rounded"></li>
+        <li><a href="perfil"><img src="{{usuario.archivo}}" width="50px" class="rounded"></a></li>
         <li>
           <p> {{usuario.nombre}} </p>
         </li>

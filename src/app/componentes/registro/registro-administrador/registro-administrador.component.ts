@@ -39,7 +39,7 @@ export class RegistroAdministradorComponent implements OnInit {
     
       email: ['', [Validators.required, Validators.email]],
       clave: ['', Validators.required],
-      archivo: [null, Validators.required] 
+      archivo1: [null, Validators.required] 
     });}
 
   ngOnInit(): void {
@@ -55,7 +55,7 @@ export class RegistroAdministradorComponent implements OnInit {
       dni: form.dni,
       email: form.email, 
       clave: form.clave,
-      archivo: this.img, 
+      archivo1: this.img, 
       perfil:'administrador' 
       
     }
