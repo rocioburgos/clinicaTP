@@ -1,6 +1,6 @@
 import { ThisReceiver } from '@angular/compiler';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal , } from '@ng-bootstrap/ng-bootstrap';
 import { EspecialidadesService } from 'src/app/servicios/especialidades/especialidades.service';
 import { UsuariosService } from 'src/app/servicios/usuarios/usuarios.service';
 
@@ -10,15 +10,22 @@ import { UsuariosService } from 'src/app/servicios/usuarios/usuarios.service';
   styleUrls: ['./modal-prueba.component.css']
 })
 export class ModalPruebaComponent implements OnInit {
-  @ViewChild('modalMensaje') modal?: ElementRef;
+ 
+  hora:string='';
 
-
-  constructor(private modalService: NgbModal) { }
+  constructor(public modal: NgbModal) { }
 
   ngOnInit(): void {
-  }
-  abrir_reservas(){ 
-    this.modalService.open(this.modal);
+  } 
+
+  reservarTurno(turno:any, hora?:any) {
+    this.hora= hora;
+    this.modal.open(turno); 
   }
 
-}
+  aceptarTurno(){
+    alert("aceptando turno..."); 
+     this.modal.dismissAll();
+  }
+
+} 

@@ -1,81 +1,79 @@
 <div class="container">
-    <h2>Mi perfil</h2> 
+    <h2>Mi perfil</h2>
     <div class="card border-info" style="width: 18rem;" *ngIf='!especialista'>
         <img class="card-img-top" src="{{perfil.archivo1}}" width="3%" height="10%">
         <div class="card-body">
-          <h5 class="card-title">{{perfil.apellido}},  {{perfil.nombre}}</h5>
-          <p class="card-text">  <br>
-                                Edad: {{perfil.edad}} <br>
-                                Email: {{perfil.email}} </p>       
-          <a href="turnos/listadoTurnoPaciente" class="btn btn-primary">Mis turnos</a>
+            <h5 class="card-title">{{perfil.apellido}}, {{perfil.nombre}}</h5>
+            <p class="card-text"> <br>
+                Edad: {{perfil.edad}} <br>
+                Email: {{perfil.email}} </p>
+            <a href="turnos/listadoTurnoPaciente" class="btn btn-primary">Mis turnos</a>
         </div>
     </div>
 
     <div class="row" *ngIf='especialista'>
-    <div class="col-3" >
-        <div class="card border-info"   >
-            <img  src="{{perfil.archivo}}" width='259px' >
-            <div class="card-body">
-              <h5 class="card-title">{{perfil.apellido}},  {{perfil.nombre}}</h5>
-              <p class="card-text">  <br>
-                                    Edad: {{perfil.edad}} <br>
-                                    Email: {{perfil.email}}<br>
-                                    </p> 
-                                    <p>Especialdiades:</p>      
-                                    <ul>
-                                        <li *ngFor='let espe of perfil.espe'> {{espe}} </li>
-                                    </ul>
-              <a href="turnos/listadoTurnoEspecialista" class="btn btn-primary">Mis turnos</a>
+        <div class="col-3">
+            <div class="card border-info">
+                <img src="{{perfil.archivo}}" width='259px'>
+                <div class="card-body">
+                    <h5 class="card-title">{{perfil.apellido}}, {{perfil.nombre}}</h5>
+                    <p class="card-text"> <br>
+                        Edad: {{perfil.edad}} <br>
+                        Email: {{perfil.email}}<br>
+                    </p>
+                    <p>Especialdiades:</p>
+                    <ul>
+                        <li *ngFor='let espe of perfil.espe'> {{espe}} </li>
+                    </ul>
+                    <a href="turnos/listadoTurnoEspecialista" class="btn btn-primary">Mis turnos</a>
+                </div>
             </div>
         </div>
-    </div>
-        <div  class="col-9">
-            
-            <table class="table table-primary table-striped" *ngFor='let especialidad of perfil.espe'>    
-               
+
+
+        <div class="col-5">
+            <table class="table table-primary table-striped" *ngFor='let especialidad of perfil.espe'>
+
                 <thead>
                     <label>Disponibilidad:{{especialidad}} </label>
                     <tr>
-                        <th>Lunes</th>
-                        <th>Martes</th>
-                        <th>Miercoles</th>
-                        <th>Jueves</th>
-                        <th>Viernes</th>
-                        <th>Sabado</th>
-                    </tr>
+                        <th *ngFor='let dia of diasAtencion'>{{dia}} </th>
+                    </tr> 
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <input type="checkbox" value="Mañana">Mañana <br>
-                            <input type="checkbox" value="Mañana">Tarde <br>
-                        </td>
-                        <td>
-                            <input type="checkbox" value="Mañana">Mañana <br>
-                            <input type="checkbox" value="Mañana">Tarde <br>
-                        </td>
-                        <td>
-                            <input type="checkbox" value="Mañana">Mañana <br>
-                            <input type="checkbox" value="Mañana">Tarde <br>
-                        </td>
-                        <td>
-                            <input type="checkbox" value="Mañana">Mañana <br>
-                            <input type="checkbox" value="Mañana">Tarde <br>
-                        </td>
-                        <td>
-                            <input type="checkbox" value="Mañana">Mañana <br>
-                            <input type="checkbox" value="Mañana">Tarde <br>
-                        </td>
-                        <td>
-                            <input type="checkbox" value="Mañana">Mañana <br>
-                            <input type="checkbox" value="Mañana">Tarde <br>
-                        </td>
-
-                    </tr>
+                <tbody> 
+                        <tr>
+                            <td> 
+                                <label>Ingreso</label><input type="time"   (change)="aver($event, 'lunes','ingreso',especialidad)">
+                                <label>Salida</label><input type="time"  (change)="aver($event, 'lunes','salida',especialidad)">
+                            </td>
+                            <td>
+                                <label>Ingreso</label><input type="time" min="13:00:00" max="16:00" (change)="aver($event, 'martes','ingreso',especialidad)">
+                                <label>Salida</label><input type="time" min="13:00:00" max="16:00:00" (change)="aver($event, 'martes','salida',especialidad)">
+                            </td>
+                            <td>
+                                <label>Ingreso</label><input type="time" min="13:00:00" max="16:00:00" (change)="aver($event, 'miercoles','ingreso',especialidad)">
+                                <label>Salida</label><input type="time" min="13:00:00" max="16:00:00" (change)="aver($event, 'miercoles','salida',especialidad)">
+                            </td>
+                            <td>
+                               <label>Ingreso</label> <input type="time" min="13:00:00" max="16:00:00" (change)="aver($event, 'jueves','ingreso',especialidad)">
+                               <label>Salida</label><input type="time" min="13:00:00" max="16:00:00" (change)="aver($event, 'jueves','salida',especialidad)">
+                            </td>
+                            <td>
+                                <label>Ingreso</label><input type="time" min="13:00:00" max="16:00:00" (change)="aver($event, 'viernes','ingreso',especialidad)">
+                                <label>Salida</label><input type="time" min="13:00:00" max="16:00:00" (change)="aver($event, 'viernes','salida',especialidad)">
+                            </td>
+                            <td>
+                                <label>Ingreso</label><input type="time" min="13:00:00" max="16:00:00" (change)="aver($event, 'sabado','ingreso',especialidad)">
+                                <label>Salida</label> <input type="time" min="13:00:00" max="16:00:00" (change)="aver($event, 'sabado','salida',especialidad)">
+                            </td> 
+                        </tr> 
                 </tbody>
+                <button  (click)='guardarDisponibiliad( )' >Guardar</button>
+                <div class="alert alert-info" role="alert" *ngIf='showMensaje'>
+                    {{mensaje}}
+                  </div>
             </table>
-
         </div>
     </div>
- 
+
 </div>

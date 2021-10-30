@@ -11,12 +11,9 @@ import { UsuariosService } from 'src/app/servicios/usuarios/usuarios.service';
 })
 export class SolicitarTurnoComponent implements OnInit {
   especialidades: Array<any> = [];
-  especialidadesFiltro:Array<any>=[] ;
-  @ViewChild('modalMensaje') modal?: ElementRef;
-
-
+  especialidadesFiltro:Array<any>=[] ; 
   constructor(private espSrv: EspecialidadesService, private usrSrv:UsuariosService,
-    private modalService: NgbModal) {
+    public modal: NgbModal) {
     this.espSrv.traerEspecialidades().subscribe((data) => {
       data.forEach(element => {
         this.especialidades.push(element);
@@ -47,10 +44,6 @@ export class SolicitarTurnoComponent implements OnInit {
   }
 
 
-   
-
-abrir_reservas(){ 
-  this.modalService.open(this.modal);
-}
+    
 
 }

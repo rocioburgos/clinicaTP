@@ -1,27 +1,21 @@
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Launch demo modal
+<button class="btn btn-danger" type="button" (click)="modal.open(turno)">Lanzar modal</button>
+<ng-template #turno let-modal>
+<div class="modal-header">
+  <h4 class="modal-title">Modal</h4>
+  <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+    <span aria-hidden="true">&times;</span>
   </button>
-  
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
+</div>
+<div class="modal-body">
+  <p>holisss</p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-success" (click)="aceptarTurno()" >ok!</button>
+</div>
+ </ng-template>
  
-  
+
+  <hr>
   <table class="tabla2">
     <thead>
       <caption>Enero 2015</caption>
@@ -44,7 +38,24 @@
         <td>4</td>
       </tr>
       <tr>
-        <td>6</td>
+        <td>6 
+          <tr>
+            <td>
+              11:30  
+              <br><br>
+              <button type="button" class="btn btn-primary"
+              (click)="reservarTurno(turno, '11:30')">Reservar</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              14:30 
+              <br><br>
+              <button type="button" class="btn btn-primary"
+              (click)="reservarTurno(turno)">Reservar</button>
+            </td>
+          </tr>
+        </td>
         <td>7</td>
         <td>8</td>
         <td>9</td>
@@ -52,7 +63,8 @@
         <td>11</td>
       </tr>
       <tr> 
-        <td>13</td>
+        <td>  
+        </td>
         <td>14</td>
         <td>15</td>
         <td>16  </td>
@@ -60,3 +72,5 @@
  
     </tbody>
   </table>
+
+ 

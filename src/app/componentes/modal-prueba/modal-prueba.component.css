@@ -48,11 +48,4 @@ body{
     padding-bottom: 3em;
     padding-right: 3em;
   }
-  
-  .tabla2 td:hover{
-    background-color: white;
-    cursor: pointer;
-    font-size: 1.6em;
-    text-align: center;
-    padding: 0;
-  }
+   
