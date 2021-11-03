@@ -1,6 +1,5 @@
  
 <form [formGroup]='formulario' (ngSubmit)='aceptarAdministrador()'>
-
     <div class="form-group">
       <input type="text" formControlName='nombre' class="fadeIn second" placeholder="Nombre">
       <br>
@@ -70,7 +69,8 @@
         archivo es requerida.</small>
     </div>
  
-
+ 
+    <re-captcha (resolved)="resolved($event)" siteKey="6LfmPw4dAAAAAIrXTFAUWG5vIwYfiGftM66Galt7" formControlName='c'></re-captcha>
 
 
     <button type="submit" class="btn btn-success" [disabled]='formulario.invalid'>ENVIAR</button>

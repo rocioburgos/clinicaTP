@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Renderer2, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/servicios/auth/auth.service';
@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { UsuariosService } from 'src/app/servicios/usuarios/usuarios.service';
 
+import { RecaptchaErrorParameters } from "ng-recaptcha";
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
@@ -31,10 +32,10 @@ export class RegistroComponent implements OnInit {
   // Seleccionamos o iniciamos el valor '0' del <select>
   opcionSeleccionado: string = '0';
   verSeleccion: string = '';
+ 
 
 
-
-  constructor() {
+  constructor(private _render:Renderer2) {
     this.paciente = null;
     this.especialista = null;
     this.administrador = null;
@@ -44,10 +45,17 @@ export class RegistroComponent implements OnInit {
       }else{
         this.tipoUsuario = ['Especialista', 'Paciente'];
       }
+
+
     
   }
 
   ngOnInit(): void {
+    let script= this._render.createElement('script');
+    script.defender = true;
+    script.async= true;
+    script.src='https://www.google.com/recaptcha/api.js';
+    this._render.appendChild(document.body, script)
   }
 
 
@@ -68,4 +76,6 @@ export class RegistroComponent implements OnInit {
       this.paciente = false;
     }
   }
+
+
 }

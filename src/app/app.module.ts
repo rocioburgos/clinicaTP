@@ -29,6 +29,8 @@ import { RegistroEspecialistaComponent } from './componentes/registro/registro-e
 import { RegistroPacienteComponent } from './componentes/registro/registro-paciente/registro-paciente.component';
 import { PerfilComponent } from './componentes/perfil/perfil.component';
 import { ModalPruebaComponent } from './componentes/modal-prueba/modal-prueba.component'; 
+
+import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha";
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,7 +59,9 @@ import { ModalPruebaComponent } from './componentes/modal-prueba/modal-prueba.co
     AngularFirestoreModule ,
     AngularFireStorageModule,
     NgbModule, //PARA LOS USAR LOS MODALES DE BOOTSTRAP
-    HttpClientModule
+    HttpClientModule,
+    RecaptchaModule,
+    RecaptchaFormsModule
   ],
   exports: [NavbarComponent],
   providers: [],

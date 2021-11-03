@@ -1,15 +1,33 @@
-<div class="container">
-    <label>Especialidades</label>
-    <div *ngFor='let esp of especialidades'>
-        <input type="checkbox" value=" {{esp.nombre}} " (change)='seleccion($event)'> {{esp.nombre}}
-    </div>
-
-
-    <div class="col-3">
-        <label>Especialistas</label>
-        <div *ngFor='let especialista of especialidadesFiltro'>
-            <input type="checkbox" value="{{especialista.doc_id}}"><label> {{especialista.apellido}}
-                {{especialista.nombre}}</label> <br>
-        </div>
+<div class="container"> 
+  <div class="grid-row">
+    <div class="grid-col grid-col-4" style="background-color: #d1d9dc;">
+       
+      <div style="padding: 15px">
+        <div class="widget-title">BUSCAR POR ESPECIALIDAD</div>
+                      <section class="widget-alt widget-appointment">
+          <div class="widget-title">Consultas</div>
+                         <form action="7nuevo-turnos-seleccionar.php" method="POST" name="frmEspecialidad">
+            <div class="row">
+                              Seleccione una especialidad :
+                                <select name="especialid" id="especialid" (change)='seleccion($event)'> 
+                                  <option *ngFor='let esp of especialidades' value=" {{esp.nombre}} " >{{esp.nombre}}</option> 
+                               </select>
+            </div>
+            <div class="row">
+                              Seleccione un profesional : 
+                              <select name="especialid" id="especialid"  (change)='seleccion_especialista($event)'> 
+                                <option *ngFor='let esp of especialistas' value=" {{esp.doc_id}} ">{{esp.apellido}}  {{esp.nombre}}</option> 
+                             </select>
+            </div>
+ 
+                            <br>
+            
+            
+            <button type="button" class="button button-primary" style="background: #8aa8b3; border-color: #78c7e5" (click)="verDisponibilidad()">Ver dias disponibles</button>
+          </form>
+        </section>
+                      
+      </div>	
     </div> 
+  </div>  
 </div>

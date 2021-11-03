@@ -10,6 +10,7 @@ import { PanelUsuariosComponent } from './componentes/panel-usuarios/panel-usuar
 import { PerfilComponent } from './componentes/perfil/perfil.component';
 import { RegistroAdministradorComponent } from './componentes/registro/registro-administrador/registro-administrador.component';
 import { RegistroComponent } from './componentes/registro/registro.component';
+import { CalendarioComponent } from './componentes/turnos/calendario/calendario.component';
 import { AdminGuard } from './guard/admin.guard';
 import { EspecialistaGuard } from './guard/especialista.guard';
 import { LoginGuard } from './guard/login.guard';
@@ -28,7 +29,7 @@ const routes: Routes = [
     loadChildren: () => import('./componentes/turnos/turnos.module').then(m => m.TurnosModule)
   },
   {path:'perfil', component: PerfilComponent,canActivate:[LoginGuard]},
-  {path:'test', component: ModalPruebaComponent},
+  {path:'test', component: ModalPruebaComponent}, 
 ];
 
 @NgModule({

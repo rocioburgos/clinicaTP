@@ -24,13 +24,16 @@ export class RegistroAdministradorComponent implements OnInit {
 
   public nombreArchivo = '';
   img='';
+  captcha: string;      // empty = not yet proven to be a human, anything else = human
+
+
   constructor(private fb: FormBuilder,
     private authSrv:AuthService,
     private usuariosSrv:UsuariosService,
     private router:Router,
     private fileSrv:FilesService) {    
      this.paciente = null;
-
+     this.captcha = '';
     this.formulario = fb.group({
       nombre: ['', [Validators.required]],
       apellido: ['', [Validators.required]],
@@ -39,11 +42,17 @@ export class RegistroAdministradorComponent implements OnInit {
     
       email: ['', [Validators.required, Validators.email]],
       clave: ['', Validators.required],
-      archivo1: [null, Validators.required] 
+      archivo1: [null, Validators.required] ,
+      c: ['', Validators.required] 
     });}
 
   ngOnInit(): void {
   }
+
+  resolved(captchaResponse: string) {
+    this.captcha = captchaResponse;
+    console.log('resolved captcha with response: ' + this.captcha);
+} 
 
   async aceptarAdministrador() {
     const form = this.formulario.value;

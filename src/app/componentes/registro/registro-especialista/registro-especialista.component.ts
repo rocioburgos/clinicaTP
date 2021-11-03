@@ -3,15 +3,8 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/servicios/auth/auth.service';
 import { EspecialidadesService } from 'src/app/servicios/especialidades/especialidades.service';
-import { EspecialistasService } from 'src/app/servicios/especialistas/especialistas.service';
-
-
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-
 import { FilesService } from 'src/app/servicios/files/files.service';
-import { Observable } from 'rxjs';
-import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { UsuariosService } from 'src/app/servicios/usuarios/usuarios.service';
 
 @Component({
@@ -34,7 +27,7 @@ export class RegistroEspecialistaComponent implements OnInit {
   completarForm = true;
   mensaje: string = '';
   img = '';
-  mensajeImagen: string = ''; 
+  mensajeImagen: string = '';
   image: any;
 
   public mensajeArchivo = 'No hay un archivo seleccionado';
@@ -43,6 +36,10 @@ export class RegistroEspecialistaComponent implements OnInit {
   public URLPublica = '';
   public porcentaje = 0;
   public finalizado = false;
+
+  captcha: string;      // empty = not yet proven to be a human, anything else = human
+
+
   constructor(private fb: FormBuilder,
     private fbesp: FormBuilder,
     private router: Router,
@@ -50,33 +47,35 @@ export class RegistroEspecialistaComponent implements OnInit {
     private especialidadesSrv: EspecialidadesService,
     private authSrv: AuthService,
     private fileSrv: FilesService,
-    private modalService: NgbModal) { 
+    private modalService: NgbModal) {
+
+    this.captcha = '';
+    this.especialidadesSrv.traerEspecialidades().subscribe((res) => {
+      this.especialidades = res;
+    });
+
+
+
     this.formularioEspecialista = fbesp.group({
       nombre_: ['', Validators.required],
       apellido: ['', Validators.required],
       edad: ['', [Validators.required, Validators.min(18), Validators.max(99)]],
       dni: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.maxLength(10), Validators.minLength(10)]],
-
       email: ['', [Validators.required, Validators.email]],
       clave: ['', Validators.required],
-      archivo: [null, [Validators.required ]],
-      especialidadCheck: [null, this.validarEspecialidad]
+      archivo: [null, [Validators.required]],
+      especialidadCheck: [null, this.validarEspecialidad],
+      c: ['', Validators.required]
     });
 
     this.formulario_Especialidad = fb.group({
       nombre: ['', [Validators.required]]
     });
 
-
-    this.especialidadesSrv.traerEspecialidades().subscribe((res) => {
-      this.especialidades = res;
-    })
   }
 
   ngOnInit(): void {
   }
-
-
 
   validarEspecialidad(control: AbstractControl) {
     const especialidadesElegidas = control.value;
@@ -86,7 +85,11 @@ export class RegistroEspecialistaComponent implements OnInit {
       return null;
     }
   }
- 
+
+  resolved(captchaResponse: string) {
+    this.captcha = captchaResponse;
+    console.log('resolved captcha with response: ' + this.captcha);
+  }
 
 
 
@@ -104,6 +107,7 @@ export class RegistroEspecialistaComponent implements OnInit {
       perfil: 'especialista',
       estado: 'pendiente',
       espe: this.especialidadesElegidas
+
     };
 
     try {
@@ -144,18 +148,19 @@ export class RegistroEspecialistaComponent implements OnInit {
 
   //Evento que se gatilla cuando el input de tipo archivo cambia
   public cambioArchivo(event: any) {
-    this.image = event.target.files[0]; 
-    this.subirArchivo(this.image); 
-  } 
+    this.image = event.target.files[0];
+    this.subirArchivo(this.image);
+  }
 
   //Sube el archivo a Cloud Storage
   async subirArchivo(data: any) {
     this.img = this.getFilePath()
     let task = this.fileSrv.uploadFile(this.img, data).then((res) => {
-       res.ref.getDownloadURL()
-                              .then(ress => {this.img = (ress);
-                                     })  ;
-    }); 
+      res.ref.getDownloadURL()
+        .then(ress => {
+          this.img = (ress);
+        });
+    });
   }
 
   getFilePath() {
@@ -171,5 +176,12 @@ export class RegistroEspecialistaComponent implements OnInit {
     });
   }
 
-
+  public generaCadenaAleatoria(n: number): string {
+    let result = '';
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    for (let i = 0; i < n; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  }
 }

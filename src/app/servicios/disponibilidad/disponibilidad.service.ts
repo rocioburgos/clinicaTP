@@ -13,4 +13,14 @@ export class DisponibilidadService {
   guardarDisponibilidad(item:any){
     return this.disponibilidadCollection.add(Object.assign({},item));    
   }
+
+  traerDisponibilidad(){
+    return this.disponibilidadCollection.valueChanges( ); 
+  }
+
+  traerDisponibilidadEspecialista(id:string){
+    return this.afs.collection('disponibilidad_especialistas', ref=>ref.where('especialista_id','==', id)  )
+                      .valueChanges( )  
+   
+  }  
 }
