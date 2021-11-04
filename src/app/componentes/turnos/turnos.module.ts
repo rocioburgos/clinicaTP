@@ -6,7 +6,10 @@ import { MisTurnosPacienteComponent } from './mis-turnos-paciente/mis-turnos-pac
 import { TurnosRoutingModule } from './turnos-routing.module';
 import { TurnosEspecialistaComponent } from './turnos-especialista/turnos-especialista.component';
 import { SolicitarTurnoComponent } from './solicitar-turno/solicitar-turno.component';
-import { CalendarioComponent } from './calendario/calendario.component';
+import { CalendarioComponent } from './calendario/calendario.component'; 
+ 
+import { TurnosComponent } from './turnos/turnos.component'; 
+import { NavbarModule } from '../navbar/navbar.module';
  
 
 @NgModule({
@@ -15,11 +18,12 @@ import { CalendarioComponent } from './calendario/calendario.component';
     TurnosEspecialistaComponent,
     SolicitarTurnoComponent,
     CalendarioComponent,
-  
+    TurnosComponent 
   ],
   imports: [
     CommonModule, 
-    TurnosRoutingModule,
+    TurnosRoutingModule, 
+    NavbarModule
    
   ]
 })

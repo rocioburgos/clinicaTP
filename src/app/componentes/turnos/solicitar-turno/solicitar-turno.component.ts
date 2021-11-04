@@ -57,7 +57,7 @@ export class SolicitarTurnoComponent implements OnInit {
 
   verDisponibilidad(){
     console.log(this.especialista_elegido);
-    this.router.navigate(['turnos/calendario/',this.especialista_elegido ]);
+    this.router.navigate(['turnos/calendario/',this.especialista_elegido, this.especialidad_elegida ]);
   }
 
     

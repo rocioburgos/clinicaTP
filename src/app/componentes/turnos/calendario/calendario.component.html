@@ -1,24 +1,40 @@
-<div> 
- 
+<app-navbar></app-navbar>
+<div class="container">  
+    <h3> Turnos disponibles para: {{especialidad}} con {{especialista}} </h3>
     <div class="main-table">
         <div class="main-table-column">
-            <table>
-                <tbody>
-                    <tr>
-                        <td height="50" class="event-container"><span
-                                style="font-size:16px; font-weight:bold;">Lunes 08<br>Noviembre</span><i
-                                class="fa fa-clock-o"></i></td>
+            <table class="table table-primary">
+                <thead>
+                    <tr> 
+                      <th scope="col">Dia</th>
+                      <th scope="col">Hora</th>
+                      <th scope="col">Accion</th>
                     </tr>
-                    <tr>
-                        <td > 11:30 <br>M. GRANDE - Rodriguez 158
-                            <br><br>
-                            <button type="button" class="btn btn-primary"
-                            (click)="modal.open(turno)">Reservar</button>
-                        </td>
-                    </tr> 
-                </tbody>
+                  </thead>
+                    <tbody>
+                        <tr>
+                            <td class="event-container"><span>Lunes 08 Noviembre</span> 
+                            </td>
+                        
+                            <td > 11:30 </td>
+                             <td>
+                                
+                                <button type="button" class="btn btn-primary"
+                                (click)="modal.open(turno)">Reservar</button>
+
+                            </td>
+
+
+                            <td>
+                                
+                              <button type="button" class="btn btn-primary"
+                              (click)="reservarTurno('lunes 8 de noviembre','11:30','')">Reservar</button>
+
+                          </td>
+                        </tr> 
+                    </tbody>
             </table>
-             
+   
             <ng-template #turno let-modal> 
             <div class="modal-header">
                 <h4 class="modal-title">Modal</h4>
@@ -27,24 +43,15 @@
                 </button>
               </div>
               <div class="modal-body">
-                <p>holisss</p>
+                <p>{{turno}} </p><br>
+                <p>{{hora}} </p>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-success" (click)="modal.close()" >ok!</button>
+                <button type="button" class="btn btn-success" (click)="modal.close()" >cancelar</button>
+                <br>
+                <button type="button" class="btn btn-success" (click)="aceptarTurno()" >aceptar</button>
               </div>
-               </ng-template>
-                        <!--div class="modal-body">
-                            <p>Fecha : 08-11-2021</p>
-                            <p>Hora : 11:30</p>
-                            <p>Profesional / Estudio : HOLTER 3 CANALES - DR. PEREZ VALEGA</p>
-                            <p>Lugar : M. GRANDE - Rodriguez 158</p>
-                            <a href="7nuevo-turnos-reservar.php?fecha=2021-11-08&amp;hora=11:30&amp;codprof=1469&amp;id=8065473"
-                                class="btn btn btn-success">RESERVAR TURNO</a>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        </div-->
-              
+               </ng-template>  
         </div>  
     </div>  
 

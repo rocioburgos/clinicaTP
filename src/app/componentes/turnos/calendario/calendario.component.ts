@@ -12,29 +12,36 @@ import { DisponibilidadI } from './../../perfil/perfil.component'
 export class CalendarioComponent implements OnInit {
 
   hora: string = '';
+  turno:any=''; 
+  id_disponibilidad:any='';
   id = ''; 
-  dispo!:Observable<DisponibilidadI>;
-
+  especialidad= ''; 
+  dispo!:Observable<any>;
+  especialista='';
   constructor(public modal: NgbModal, private rutaActiva: ActivatedRoute, private dispSrv: DisponibilidadService){}
 
 
   ngOnInit(): void {
-    this.id = this.rutaActiva.snapshot.params.id;
-    console.log(this.id);
-    this.dispSrv.traerDisponibilidadEspecialista(this.id).subscribe((data)=>{ 
-          data.forEach((element:any) => {
-            console.log(element.especialista_id ); 
-            if(element.especialista_id  == this.id){
-              console.log(element)
-            }
+    this.id = this.rutaActiva.snapshot.params.id.replace(/\s/g, "");;
+    this.especialidad = this.rutaActiva.snapshot.params.especialidad.replace(/\s/g, "");
+    this.dispSrv.traerDisponibilidad().subscribe((data)=>{
+      data.forEach(element => {   
+        if(element.especialista_id == this.id && element.especialidad.replace(/\s/g, "") ==this.especialidad){ 
+          element.horarios.forEach((hora:any) => {
+              console.log(hora);
+            
           });
+        }
+      });
     });
 
- 
+    //levantar los datos del especialista 
   }
 
-  reservarTurno(turno: any, hora?: any) {
+  reservarTurno(turno: any, hora: any, id_disponibilidad:any) {
     this.hora = hora;
+    this.id_disponibilidad= id_disponibilidad;
+    this.turno= turno;
     this.modal.open(turno);
   }
 

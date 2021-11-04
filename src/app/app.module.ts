@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
+import { BrowserModule } from '@angular/platform-browser'; 
+ 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './componentes/home/home.component';
 import { LoginComponent } from './componentes/login/login.component';
@@ -31,13 +30,15 @@ import { PerfilComponent } from './componentes/perfil/perfil.component';
 import { ModalPruebaComponent } from './componentes/modal-prueba/modal-prueba.component'; 
 
 import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha";
+import { NavbarModule } from './componentes/navbar/navbar.module';
+import { AppRoutingModule } from './app-routing.module';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
     RegistroComponent,
-    NavbarComponent, 
+    
     HomeAdminComponent,
     PanelUsuariosComponent,
     LogoutComponent,
@@ -61,9 +62,10 @@ import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha";
     NgbModule, //PARA LOS USAR LOS MODALES DE BOOTSTRAP
     HttpClientModule,
     RecaptchaModule,
-    RecaptchaFormsModule
+    RecaptchaFormsModule,
+    NavbarModule
   ],
-  exports: [NavbarComponent],
+  exports: [ ],
   providers: [],
   bootstrap: [AppComponent]
 })

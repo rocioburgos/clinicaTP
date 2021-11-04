@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <div class="container">
     <h2>Mi perfil</h2>
     <div class="card border-info" style="width: 18rem;" *ngIf='!especialista'>
@@ -10,7 +11,10 @@
             <a href="turnos/listadoTurnoPaciente" class="btn btn-primary">Mis turnos</a>
         </div>
     </div>
+ 
 
+
+    <!--PARA EL ESPECIALISTA-->
     <div class="row" *ngIf='especialista'>
         <div class="col-3">
             <div class="card border-info">
